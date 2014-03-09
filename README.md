@@ -1,12 +1,10 @@
-###GUFF
-
-Lets keep this shit simple.
+##GUFF
 
 [Demo](http://kenwheeler.github.io/guff/)
 
 [Annotated Source](http://kenwheeler.github.io/guff/docs/guff.html)
 
-####Features
+###Features
 
 ####FLEXIBLE TYPOGRAPHY
 
