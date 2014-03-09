@@ -2,6 +2,10 @@
 
 Lets keep this shit simple.
 
+[Demo](http://kenwheeler.github.io/guff/)
+
+[Annotated Source](http://kenwheeler.github.io/guff/docs/guff.html)
+
 ####Features
 
 ####FLEXIBLE TYPOGRAPHY
