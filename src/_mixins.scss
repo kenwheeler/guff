@@ -1,0 +1,120 @@
+// ###Mixins
+
+// Sets container styles
+@mixin container {
+  width: 100%;
+  max-width: $grid-max-width;
+  @include clear();
+}
+
+// Sets grid column width
+@mixin span($cols: 4,$inline: false,$gutter: '') {
+  width: percentage($cols/$grid-columns);
+  max-width: $grid-max-width;
+  @if $gutter  != '' {
+  padding-left: $gutter / 2;
+  padding-right: $gutter / 2;
+  }
+  @if $inline == true {
+  display: inline-block;
+  margin-right: -5px;
+  }
+  box-sizing: border-box;
+}
+
+// Sets grid offet margin
+@mixin offset($cols: 4,$gutter: '') {
+  margin-left: percentage($cols/$grid-columns)
+}
+
+// Wraps interior content in a media query
+@mixin breakpoint($querystring) {
+  @media #{$querystring} {
+    @content;
+  }
+}
+
+// Renders fully prefixed transistion
+@mixin transition ($properties...) {
+  @if length($properties) >= 1 {
+    @include prefixer(transition, $properties, webkit moz spec);
+  }
+
+  @else {
+    $properties: all 0.15s ease-out 0s;
+    @include prefixer(transition, $properties, webkit moz spec);
+  }
+}
+
+// Renders fully prefixed transform
+@mixin transform($property: none) {
+  @include prefixer(transform, $property, webkit moz ms spec);
+}
+
+// Renders fully prefixed box-sizing
+@mixin box-sizing ($box) {
+  @include prefixer(box-sizing, $box, webkit moz spec);
+}
+
+// Utility for prefixing mixins
+@mixin prefixer ($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+        -webkit-#{$property}: $value;
+    }
+    @else if $prefix == moz {
+        -moz-#{$property}: $value;
+    }
+    @else if $prefix == ms {
+        -ms-#{$property}: $value;
+    }
+    @else if $prefix == spec {
+        #{$property}: $value;
+    }
+    @else  {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+// Sets ellipsis overflow
+@mixin ellipsis($width: 100%) {
+  display: inline-block;
+  max-width: $width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Clearfix include
+@mixin clear {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+}
+
+// Text hider
+
+@mixin hide-text{
+    overflow:hidden;
+    text-indent:-9999px;
+    display:block;
+}
+
+// Inline List
+
+@mixin inline-list {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+    > li{
+        display:block;
+        float:left;
+        &:last-child{
+            margin-right:0px;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+// ###Typography
+
+// Scale type at a ratio of 1.14
+$h6-size: round(strip-unit($rem-base) * 1.14);
+$h5-size: round($h6-size * 1.14);
+$h4-size: round($h5-size * 1.14);
+$h3-size: round($h4-size * 1.14);
+$h2-size: round($h3-size * 1.14);
+$h1-size: round($h2-size * 1.14);
+
+// Set line-height to 1
+body {
+  line-height: 1.5;
+}
+
+// Global border-box
+* {
+  @include box-sizing(border-box);
+}
+
+// Set heading sizes to size variables
+h1 {
+  font-size: rem-calc($h1-size);
+}
+
+h2 {
+  font-size: rem-calc($h2-size);
+}
+
+h3 {
+  font-size: rem-calc($h3-size);
+}
+
+h4 {
+  font-size: rem-calc($h4-size);
+}
+
+h5 {
+  font-size: rem-calc($h5-size);
+}
+
+h6 {
+  font-size: rem-calc($h6-size);
+}
+
+p {
+  font-size: $rem-base;
+  line-height: 1.5;
+}

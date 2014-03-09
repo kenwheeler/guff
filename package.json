@@ -1,0 +1,18 @@
+{
+  "name": "guff",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.5.0",
+    "gulp-load-plugins": "~0.3.0",
+    "gulp-util": "~2.2.9",
+    "gulp-sass": "~0.7.1",
+    "gulp-size": "~0.1.2",
+    "gulp-connect": "~1.0.0",
+    "gulp-concat": "~2.1.7",
+    "gulp-docco": "0.0.3"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

@@ -1,0 +1,265 @@
+// ###Reset
+
+// Reset all browser styles & set font-size to 100%
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+// Set HTML5 elements to block
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+// Remove built in list styling
+ol, ul {
+  list-style: none;
+}
+
+// Normalize block quotes
+blockquote, q {
+  quotes: none;
+}
+
+// Remove pseudo elements
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+// Normalize tables
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+// ###Settings
+
+// Set base font size
+$rem-base: 16px !default;
+// Set line height ratio base
+$line-height-base: 26;
+
+// Desktop Media Query
+$desktop: "(min-width: 1024px)";
+// Tablet Media Query
+$tablet: "(min-width: 768px) and (max-width: 1023px)";
+// Mobile Media Query
+$mobile: "(max-width: 767px)";
+
+// Set Grid Column Count
+$grid-columns: 12;
+// Set Grid Max Width
+$grid-max-width: 1024px;
+// ###Functions
+
+// Strips unit suffix from value
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// Converts to rem, utility for rem-calc
+@function convert-to-rem($value, $base-value: $rem-base)  {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+  @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+  @return $value;
+}
+
+// Calculates rem value from number
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+  @return $remValues;
+}
+// ###Mixins
+
+// Sets container styles
+@mixin container {
+  width: 100%;
+  max-width: $grid-max-width;
+  @include clear();
+}
+
+// Sets grid column width
+@mixin span($cols: 4,$inline: false,$gutter: '') {
+  width: percentage($cols/$grid-columns);
+  max-width: $grid-max-width;
+  @if $gutter  != '' {
+  padding-left: $gutter / 2;
+  padding-right: $gutter / 2;
+  }
+  @if $inline == true {
+  display: inline-block;
+  margin-right: -5px;
+  }
+  box-sizing: border-box;
+}
+
+// Sets grid offet margin
+@mixin offset($cols: 4,$gutter: '') {
+  margin-left: percentage($cols/$grid-columns)
+}
+
+// Wraps interior content in a media query
+@mixin breakpoint($querystring) {
+  @media #{$querystring} {
+    @content;
+  }
+}
+
+// Renders fully prefixed transistion
+@mixin transition ($properties...) {
+  @if length($properties) >= 1 {
+    @include prefixer(transition, $properties, webkit moz spec);
+  }
+
+  @else {
+    $properties: all 0.15s ease-out 0s;
+    @include prefixer(transition, $properties, webkit moz spec);
+  }
+}
+
+// Renders fully prefixed transform
+@mixin transform($property: none) {
+  @include prefixer(transform, $property, webkit moz ms spec);
+}
+
+// Renders fully prefixed box-sizing
+@mixin box-sizing ($box) {
+  @include prefixer(box-sizing, $box, webkit moz spec);
+}
+
+// Utility for prefixing mixins
+@mixin prefixer ($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+        -webkit-#{$property}: $value;
+    }
+    @else if $prefix == moz {
+        -moz-#{$property}: $value;
+    }
+    @else if $prefix == ms {
+        -ms-#{$property}: $value;
+    }
+    @else if $prefix == spec {
+        #{$property}: $value;
+    }
+    @else  {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+// Sets ellipsis overflow
+@mixin ellipsis($width: 100%) {
+  display: inline-block;
+  max-width: $width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Clearfix include
+@mixin clear {
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+}
+
+// Text hider
+
+@mixin hide-text{
+    overflow:hidden;
+    text-indent:-9999px;
+    display:block;
+}
+
+// Inline List
+
+@mixin inline-list {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+    > li{
+        display:block;
+        float:left;
+        &:last-child{
+            margin-right:0px;
+        }
+    }
+}
+// ###Typography
+
+// Scale type at a ratio of 1.14
+$h6-size: round(strip-unit($rem-base) * 1.14);
+$h5-size: round($h6-size * 1.14);
+$h4-size: round($h5-size * 1.14);
+$h3-size: round($h4-size * 1.14);
+$h2-size: round($h3-size * 1.14);
+$h1-size: round($h2-size * 1.14);
+
+// Set line-height to 1
+body {
+  line-height: 1.5;
+}
+
+// Global border-box
+* {
+  @include box-sizing(border-box);
+}
+
+// Set heading sizes to size variables
+h1 {
+  font-size: rem-calc($h1-size);
+}
+
+h2 {
+  font-size: rem-calc($h2-size);
+}
+
+h3 {
+  font-size: rem-calc($h3-size);
+}
+
+h4 {
+  font-size: rem-calc($h4-size);
+}
+
+h5 {
+  font-size: rem-calc($h5-size);
+}
+
+h6 {
+  font-size: rem-calc($h6-size);
+}
+
+p {
+  font-size: $rem-base;
+  line-height: 1.5;
+}

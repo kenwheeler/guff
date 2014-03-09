@@ -1,0 +1,18 @@
+// ###Settings
+
+// Set base font size
+$rem-base: 16px !default;
+// Set line height ratio base
+$line-height-base: 26;
+
+// Desktop Media Query
+$desktop: "(min-width: 1024px)";
+// Tablet Media Query
+$tablet: "(min-width: 768px) and (max-width: 1023px)";
+// Mobile Media Query
+$mobile: "(max-width: 767px)";
+
+// Set Grid Column Count
+$grid-columns: 12;
+// Set Grid Max Width
+$grid-max-width: 1024px;

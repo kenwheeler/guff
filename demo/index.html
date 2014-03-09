@@ -1,0 +1,211 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>GUFF</title>
+        <meta name="description" content="Structure Style Guide">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body>
+        <header class="primary">
+        <h1>GUFF</h1>
+        <p>Lets keep this shit simple.</p>
+        </header>
+        <main>
+            <section class="typography">
+                <header>
+                    <h2>Flexible Typography</h2>
+                </header>
+                <h1>H1</h1>
+                <h2>H2</h2>
+                <h3>H3</h3>
+                <h4>H4</h4>
+                <h5>H5</h5>
+                <h6>H6</h6>
+                <p>Paragraph</p>
+            </section>
+            <section>
+                <header>
+                    <h2>Breakpoint Mixin</h2>
+                </header>
+                <code class="prettyprint">
+div {
+    @include breakpoint($desktop){
+        width: 100%;
+    }
+}
+                </code>
+                <p>Renders the following media query:</p>
+                <code class="prettyprint">
+@media (min-width: 1024px) {
+    div {
+        width: 100%;
+    }
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Container Mixin</h2>
+                </header>
+                <code class="prettyprint">
+// Use on divs wrapping non inline span mixins
+
+.container {
+    @include container();
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Span Mixin</h2>
+                </header>
+                <code class="prettyprint">
+// cols : int - Column count
+// inline : boolean - Use inline block
+// padding: px - Interior Padding
+
+@include span(cols, inline, padding)
+                </code>
+                <div class="container">
+                    <div class="float-tile"></div>
+                    <div class="float-tile"></div>
+                    <div class="float-tile"></div>
+                </div>
+                <code class="prettyprint">
+// Float Tile
+// Requires container with clear() mixin
+
+.float-tile {
+    @include span(4);
+    float: left;
+}
+                </code>
+                <div class="inline-tile"></div>
+                <div class="inline-tile"></div>
+                <div class="inline-tile"></div>
+                <code class="prettyprint">
+// Inline Block Tile
+
+.inline-tile {
+    @include span(4, true);
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Offset Mixin</h2>
+                </header>
+                <code class="prettyprint">
+// cols : int - Column count
+
+@include offset(cols)
+                </code>
+                <div class="container">
+                    <div class="float-tile offset-tile">
+
+                    </div>
+                </div>
+                <code class="prettyprint">
+.float-tile.offset-tile {
+    @include @offset(4);
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Prefix Mixins</h2>
+                </header>
+                <code class="prettyprint">
+// Generates browser prefixes for properties
+
+// Transistion
+@include transition(all 1s linear);
+
+// Transform
+@include transform(translateZ(0));
+
+// Box Sizing
+@include box-sizing(border-box);
+
+// Anything you want
+@include prefixer(text-shadow, 5px, webkit moz ms o);
+
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>rem-calc()</h2>
+                </header>
+                <code class="prettyprint">
+// Calculates rem value for px value
+
+font-size: rem-calc(14);
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Helper Mixins</h2>
+                </header>
+                <code class="prettyprint">
+// Clearfix Mixin
+//
+// &:after {
+// content:"";
+//  display:table;
+//  clear:both;
+// }
+//
+
+@include clear();
+
+// Ellipsis Mixin - ellipsis($width)
+//
+// display: inline-block;
+// max-width: $width;
+// overflow: hidden;
+// text-overflow: ellipsis;
+// white-space: nowrap;
+//
+
+@include ellipsis(200px);
+
+// Hide Text
+//
+// overflow:hidden;
+// text-indent:-9999px;
+// display:block;
+//
+
+@include hide-text;
+
+// Inline List (use on &lt;ul&gt;)
+//
+// list-style-type:none;
+// padding:0;
+//  margin:0;
+//  overflow:hidden;
+//  > li{
+//      display:block;
+//      float:left;
+//      &:last-child{
+//          margin-right:0px;
+//      }
+//  }
+
+@include inline-list;
+
+                </code>
+            </section>
+        </main>
+        <footer class="primary">
+            <p>&copy; 2014 Ken Wheeler</p>
+        </footer>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css"></script>
+
+    </body>
+</html>
