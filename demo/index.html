@@ -29,6 +29,8 @@
                     <h2>Breakpoint Mixin</h2>
                 </header>
                 <code class="prettyprint">
+$desktop: "(min-width: 1024px)";
+
 div {
     @include breakpoint($desktop){
         width: 100%;
@@ -49,10 +51,10 @@ div {
                     <h2>Container Mixin</h2>
                 </header>
                 <code class="prettyprint">
-// Use on divs wrapping non inline span mixins
+// Use on divs wrapping span mixins
 
 .container {
-    @include container();
+    @include container;
 }
                 </code>
             </section>
@@ -62,9 +64,9 @@ div {
                 </header>
                 <code class="prettyprint">
 // cols : int - Column count
-// inline : boolean - Use inline block
+// padding : px - Interior padding : optional
 
-@include span(cols, padding)
+@include span(cols, padding);
                 </code>
                 <div class="container">
                     <div class="float-tile"></div>
@@ -87,7 +89,7 @@ div {
                 <code class="prettyprint">
 // cols : int - Column count
 
-@include offset(cols)
+@include offset(cols);
                 </code>
                 <div class="container">
                     <div class="float-tile offset-tile">
@@ -172,7 +174,7 @@ font-size: rem-calc(14);
 // }
 //
 
-@include clear();
+@include clear;
 
 // Ellipsis Mixin - ellipsis($width)
 //
@@ -224,6 +226,10 @@ font-size: rem-calc(14);
 // $type-rhythm-ratio - header scaling ratio
 
 @include type(16px, 26, 1.14);
+
+// No arguments required, falls back to settings variables
+
+@include type;
                 </code>
                 <h1>H1</h1>
                 <h2>H2</h2>
@@ -247,6 +253,44 @@ bower install guff
                 <a href='https://github.com/kenwheeler/guff/' class='download-button'>
                     Download
                     <span>Latest version from GitHub</span>
+                </a>
+            </section>
+            <section>
+                <header>
+                    <h2>Settings</h2>
+                </header>
+                <p>Override these variables at the top of your scss file.</p>
+                <code class="prettyprint">
+
+// Set base font size
+$rem-base: 16px !default;
+// Set line height ratio base
+$line-height-base: 26;
+// Vertical rhythm ratio
+$type-rhythm-ratio: 1.14;
+
+// Desktop Media Query
+$desktop: "(min-width: 1024px)";
+// Tablet Media Query
+$tablet: "(min-width: 768px) and (max-width: 1023px)";
+// Mobile Media Query
+$mobile: "(max-width: 767px)";
+
+// Set Grid Column Count
+$grid-columns: 12;
+// Set Grid Gutter
+$grid-gutter: 20px;
+// Set Grid Max Width
+$grid-max-width: 1024px;
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Playground</h2>
+                </header>
+                <a href='http://codepen.io/kenwheeler/pen/tpBdF' class='download-button'>
+                    Try it out live
+                    <span>On The Codepen Sandbox</span>
                 </a>
             </section>
         </main>
