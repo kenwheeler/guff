@@ -1,54 +1,63 @@
 // ###Reset
 
-// Reset all browser styles & set font-size to 100%
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
+@mixin reset(){
 
-// Set HTML5 elements to block
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
+  // Reset all browser styles & set font-size to 100%
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
 
-// Remove built in list styling
-ol, ul {
-  list-style: none;
-}
+  // Set HTML5 elements to block
+  article, aside, details, figcaption, figure,
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
 
-// Normalize block quotes
-blockquote, q {
-  quotes: none;
-}
+  // Remove built in list styling
+  ol, ul {
+    list-style: none;
+  }
 
-// Remove pseudo elements
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
+  // Normalize block quotes
+  blockquote, q {
+    quotes: none;
+  }
 
-// Normalize tables
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
+  // Remove pseudo elements
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+
+  // Normalize tables
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  // Global border-box
+  * {
+    @include box-sizing(border-box);
+  }
+
 }
 // ###Settings
 
@@ -56,6 +65,8 @@ table {
 $rem-base: 16px !default;
 // Set line height ratio base
 $line-height-base: 26;
+// Vertical rhythm ratio
+$type-rhythm-ratio: 1.14;
 
 // Desktop Media Query
 $desktop: "(min-width: 1024px)";
@@ -222,50 +233,49 @@ $grid-max-width: 1024px;
 }
 // ###Typography
 
-// Scale type at a ratio of 1.14
-$h6-size: round(strip-unit($rem-base) * 1.14);
-$h5-size: round($h6-size * 1.14);
-$h4-size: round($h5-size * 1.14);
-$h3-size: round($h4-size * 1.14);
-$h2-size: round($h3-size * 1.14);
-$h1-size: round($h2-size * 1.14);
+// Scale type at $type-rhythm-ratio
+$h6-size: round(strip-unit($rem-base) * $type-rhythm-ratio);
+$h5-size: round($h6-size * $type-rhythm-ratio);
+$h4-size: round($h5-size * $type-rhythm-ratio);
+$h3-size: round($h4-size * $type-rhythm-ratio);
+$h2-size: round($h3-size * $type-rhythm-ratio);
+$h1-size: round($h2-size * $type-rhythm-ratio);
 
-// Set line-height to 1
-body {
-  line-height: 1.5;
-}
+// Typographic Rhythm Mixin
+@mixin type($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){
 
-// Global border-box
-* {
-  @include box-sizing(border-box);
-}
+  // Set line-height
+  body {
+    line-height: $line-height-base / strip-unit($rem-base);
+  }
 
-// Set heading sizes to size variables
-h1 {
-  font-size: rem-calc($h1-size);
-}
+  // Set heading sizes to size variables
+  h1 {
+    font-size: rem-calc($h1-size);
+  }
 
-h2 {
-  font-size: rem-calc($h2-size);
-}
+  h2 {
+    font-size: rem-calc($h2-size);
+  }
 
-h3 {
-  font-size: rem-calc($h3-size);
-}
+  h3 {
+    font-size: rem-calc($h3-size);
+  }
 
-h4 {
-  font-size: rem-calc($h4-size);
-}
+  h4 {
+    font-size: rem-calc($h4-size);
+  }
 
-h5 {
-  font-size: rem-calc($h5-size);
-}
+  h5 {
+    font-size: rem-calc($h5-size);
+  }
 
-h6 {
-  font-size: rem-calc($h6-size);
-}
+  h6 {
+    font-size: rem-calc($h6-size);
+  }
 
-p {
-  font-size: $rem-base;
-  line-height: 1.5;
+  p {
+    font-size: $rem-base;
+  }
+
 }

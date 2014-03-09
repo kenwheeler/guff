@@ -18,6 +18,14 @@
         <main>
             <section>
                 <header>
+                    <h2>CSS Reset Mixin</h2>
+                </header>
+                <code class="prettyprint">
+@include reset;
+                </code>
+            </section>
+            <section>
+                <header>
                     <h2>Breakpoint Mixin</h2>
                 </header>
                 <code class="prettyprint">
@@ -206,8 +214,17 @@ font-size: rem-calc(14);
             </section>
             <section class="typography">
                 <header>
-                    <h2>Flexible Typography</h2>
+                    <h2>Typographic Rhythm</h2>
                 </header>
+                <code class="prettyprint">
+// Uses the following variable settings
+//
+// $rem-base - base rem size in px
+// $line-height-base - line height base
+// $type-rhythm-ratio - header scaling ratio
+
+@include type(16px, 26, 1.14);
+                </code>
                 <h1>H1</h1>
                 <h2>H2</h2>
                 <h3>H3</h3>
@@ -215,6 +232,22 @@ font-size: rem-calc(14);
                 <h5>H5</h5>
                 <h6>H6</h6>
                 <p>Paragraph</p>
+            </section>
+            <section>
+                <header>
+                    <h2>Installation</h2>
+                </header>
+                <code class="prettyprint">
+bower install guff
+
+// In your SCSS file
+
+@import "guff"
+                </code>
+                <a href='https://github.com/kenwheeler/guff/' class='download-button'>
+                    Download
+                    <span>Latest version from GitHub</span>
+                </a>
             </section>
         </main>
         <footer class="primary">

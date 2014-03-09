@@ -23,13 +23,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-body {
-  line-height: 1.5; }
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
+
+body {
+  line-height: 1.625; }
 
 h1 {
   font-size: 2.1875rem; }
@@ -50,8 +50,7 @@ h6 {
   font-size: 1.125rem; }
 
 p {
-  font-size: 16px;
-  line-height: 1.5; }
+  font-size: 16px; }
 
 body {
   font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif; }
@@ -75,6 +74,32 @@ code {
     color: #f0c; }
   code span.kwd {
     color: #c0f; }
+
+a.download-button {
+  display: block;
+  padding: 10px 20px 10px 20px;
+  color: #555;
+  text-decoration: none;
+  font-size: 1.125rem;
+  font-weight: bold;
+  background: #eee;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: all 50ms linear;
+  -moz-transition: all 50ms linear;
+  transition: all 50ms linear;
+  margin: 0px 0px 20px; }
+
+a.download-button:hover {
+  background-color: #ddd;
+  border-color: #ccc; }
+
+a.download-button span {
+  font-size: 14px;
+  display: block;
+  margin-top: 2px; }
 
 header.primary {
   width: 100%;

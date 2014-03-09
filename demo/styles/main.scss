@@ -2,6 +2,10 @@
 
 $grid-max-width: 600px;
 
+@include reset;
+
+@include type;
+
 body {
     font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
 }
@@ -21,6 +25,31 @@ code {
     span.pln { color: #c0f; }
     span.lit { color: #f0c; }
     span.kwd { color: #c0f; }
+}
+
+a.download-button {
+    display: block;
+    padding: 10px 20px 10px 20px;
+    color: #555;
+    text-decoration: none;
+    font-size: rem-calc(18);
+    font-weight: bold;
+    background: #eee;
+    border: 1px solid #ddd;
+    @include prefixer(border-radius, 5px, webkit moz o spec);
+    @include transition(all 50ms linear);
+    margin: 0px 0px 20px;
+}
+
+a.download-button:hover {
+    background-color: #ddd;
+    border-color: #ccc;
+}
+
+a.download-button span {
+    font-size: 14px;
+    display: block;
+    margin-top: 2px;
 }
 
 header.primary {
