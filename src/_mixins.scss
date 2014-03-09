@@ -8,18 +8,12 @@
 }
 
 // Sets grid column width
-@mixin span($cols: 4,$inline: false,$gutter: '') {
+@mixin span($cols: 4,$gutter: $grid-gutter) {
   width: percentage($cols/$grid-columns);
   max-width: $grid-max-width;
-  @if $gutter  != '' {
   padding-left: $gutter / 2;
   padding-right: $gutter / 2;
-  }
-  @if $inline == true {
-  display: inline-block;
-  margin-right: -5px;
-  }
-  box-sizing: border-box;
+  float: left;
 }
 
 // Sets grid offet margin

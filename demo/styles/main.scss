@@ -24,7 +24,7 @@ code {
 }
 
 header.primary {
-    @include span(12);
+    width: span(12);
     border-bottom: 1px solid #eee;
     margin: 0px auto 20px;
     text-align: center;
@@ -39,7 +39,7 @@ header.primary {
         padding: 0px 0px 20px 0px;
     }
     @include breakpoint($mobile) {
-        @include span(12, false, 20px);
+        @include span(12, 20px);
         h1 {
             @include span(12);
             @include offset(0);
@@ -47,10 +47,10 @@ header.primary {
     }
 }
 main {
-    @include span(12, false, 20px);
+    @include container();
     margin: auto;
     section {
-        margin: 0px 0px 20px;
+        @include span(12);
         header {
             margin: 0px 0px 20px 0px;
             text-align: center;
@@ -62,11 +62,12 @@ main {
             }
         }
         &.typography {
+            margin: 0px 0px 15px;
             h1,h2,h3,h4,h5,h6,p {
                 background: #fee;
                 margin: 10px 0px;
             }
-            header h2 { background: none; }
+            header h2 { background: none; margin: 0px 0px 5px; }
         }
         .container {
             @include container();
@@ -91,7 +92,7 @@ main {
     }
 }
 footer.primary {
-    @include span(12);
+    width: span(12);
     margin: 0px auto 20px;
     padding: 10px 0px;
     text-align: center;

@@ -49,6 +49,6 @@ gulp.task('watch', ['connect'], function () {
         return gulp.src(event.path)
             .pipe($.connect.reload());
     });
-    gulp.watch(['src/**/*.scss'], ['default']);
-    gulp.watch(['demo/styles/**/*.scss'], ['default']);
+    gulp.watch(['src/**/*.scss'], ['styles','docs']);
+    gulp.watch(['demo/styles/**/*.scss'], ['demo']);
 });

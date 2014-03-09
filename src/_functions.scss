@@ -24,3 +24,13 @@
   }
   @return $remValues;
 }
+
+// Gets grid column width
+@function span($cols: 4) {
+  @return percentage($cols/$grid-columns);
+}
+
+// Gets grid gutter
+@function gutter(){
+  @return $grid-gutter;
+}

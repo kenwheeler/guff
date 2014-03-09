@@ -16,18 +16,6 @@
         <p>Lets keep this shit simple.</p>
         </header>
         <main>
-            <section class="typography">
-                <header>
-                    <h2>Flexible Typography</h2>
-                </header>
-                <h1>H1</h1>
-                <h2>H2</h2>
-                <h3>H3</h3>
-                <h4>H4</h4>
-                <h5>H5</h5>
-                <h6>H6</h6>
-                <p>Paragraph</p>
-            </section>
             <section>
                 <header>
                     <h2>Breakpoint Mixin</h2>
@@ -67,9 +55,8 @@ div {
                 <code class="prettyprint">
 // cols : int - Column count
 // inline : boolean - Use inline block
-// padding: px - Interior Padding
 
-@include span(cols, inline, padding)
+@include span(cols, padding)
                 </code>
                 <div class="container">
                     <div class="float-tile"></div>
@@ -77,22 +64,11 @@ div {
                     <div class="float-tile"></div>
                 </div>
                 <code class="prettyprint">
-// Float Tile
 // Requires container with clear() mixin
+// Use span function to just get width
 
-.float-tile {
+.tile {
     @include span(4);
-    float: left;
-}
-                </code>
-                <div class="inline-tile"></div>
-                <div class="inline-tile"></div>
-                <div class="inline-tile"></div>
-                <code class="prettyprint">
-// Inline Block Tile
-
-.inline-tile {
-    @include span(4, true);
 }
                 </code>
             </section>
@@ -111,8 +87,35 @@ div {
                     </div>
                 </div>
                 <code class="prettyprint">
-.float-tile.offset-tile {
+.tile.offset-tile {
     @include @offset(4);
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Span Function</h2>
+                </header>
+                <code class="prettyprint">
+// Use to simply get column width
+
+.tile-no-float {
+    width: span(4);
+    margin-left: span(2);
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Gutter Function</h2>
+                </header>
+                <code class="prettyprint">
+// Use to get gutter width
+
+.tile-padded {
+    width: span(4);
+    padding-left: gutter();
+    padding-right: gutter();
 }
                 </code>
             </section>
@@ -200,6 +203,18 @@ font-size: rem-calc(14);
 @include inline-list;
 
                 </code>
+            </section>
+            <section class="typography">
+                <header>
+                    <h2>Flexible Typography</h2>
+                </header>
+                <h1>H1</h1>
+                <h2>H2</h2>
+                <h3>H3</h3>
+                <h4>H4</h4>
+                <h5>H5</h5>
+                <h6>H6</h6>
+                <p>Paragraph</p>
             </section>
         </main>
         <footer class="primary">

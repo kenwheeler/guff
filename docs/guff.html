@@ -266,11 +266,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Set Grid Max Width</p>
+              <p>Set Grid Gutter</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$grid-<span class="hljs-attribute">max-width</span><span class="hljs-value">: <span class="hljs-number">1024</span>px;</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>$grid-gutter<span class="hljs-value">: <span class="hljs-number">20</span>px;</span></pre></div></div>
             
         </li>
         
@@ -281,9 +281,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h3 id="functions">Functions</h3>
+              <p>Set Grid Max Width</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>$grid-<span class="hljs-attribute">max-width</span><span class="hljs-value">: <span class="hljs-number">1024</span>px;</span></pre></div></div>
             
         </li>
         
@@ -293,6 +295,19 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h3 id="functions">Functions</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Strips unit suffix from value</p>
 
@@ -305,11 +320,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Converts to rem, utility for rem-calc</p>
 
@@ -324,11 +339,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Calculates rem value from number</p>
 
@@ -349,11 +364,45 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Gets grid column width</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>) {</span>
+  <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> percentage</span>($cols/$grid-columns);</span>
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Gets grid gutter</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> gutter</span>(){</span>
+  <span class="hljs-at_rule">@return $grid-gutter;</span>
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h3 id="mixins">Mixins</h3>
 
@@ -362,11 +411,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-21">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Sets container styles</p>
 
@@ -381,38 +430,33 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-22">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Sets grid column width</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>,$inline:<span class="hljs-preprocessor"> false</span>,$gutter: <span class="hljs-string">''</span>) {</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>,$gutter: $grid-gutter) {</span>
   <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($cols/$grid-columns);</span>
   <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $gutter  != <span class="hljs-string">''</span> {</span>
   <span class="hljs-attribute">padding-left</span><span class="hljs-value">: $gutter / <span class="hljs-number">2</span>;</span>
   <span class="hljs-attribute">padding-right</span><span class="hljs-value">: $gutter / <span class="hljs-number">2</span>;</span>
-  }
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $inline ==<span class="hljs-preprocessor"> true</span> {</span>
-  <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
-  <span class="hljs-attribute">margin-right</span><span class="hljs-value">: -<span class="hljs-number">5</span>px;</span>
-  }
+  <span class="hljs-attribute">float</span><span class="hljs-value">: left;</span>
   <span class="hljs-attribute">box-sizing</span><span class="hljs-value">: border-box;</span>
 }</pre></div></div>
             
         </li>
         
         
-        <li id="section-23">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Sets grid offet margin</p>
 
@@ -427,11 +471,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-24">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Wraps interior content in a media query</p>
 
@@ -446,11 +490,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-25">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Renders fully prefixed transistion</p>
 
@@ -470,11 +514,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-26">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Renders fully prefixed transform</p>
 
@@ -487,11 +531,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-27">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Renders fully prefixed box-sizing</p>
 
@@ -504,11 +548,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-28">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Utility for prefixing mixins</p>
 
@@ -537,11 +581,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-29">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Sets ellipsis overflow</p>
 
@@ -558,11 +602,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-30">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Clearfix include</p>
 
@@ -579,11 +623,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-31">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Text hider</p>
 
@@ -599,11 +643,39 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-32">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Inline List</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> inline-list</span> {</span>
+    <span class="hljs-attribute">list-style-type</span><span class="hljs-value">:none;</span>
+    <span class="hljs-attribute">padding</span><span class="hljs-value">:<span class="hljs-number">0</span>;</span>
+    <span class="hljs-attribute">margin</span><span class="hljs-value">:<span class="hljs-number">0</span>;</span>
+    <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
+    &gt; <span class="hljs-tag">li</span>{
+        <span class="hljs-attribute">display</span><span class="hljs-value">:block;</span>
+        <span class="hljs-attribute">float</span><span class="hljs-pseudo">:left</span>;
+        &amp;<span class="hljs-pseudo">:last-child</span>{
+            <span class="hljs-attribute">margin-right</span><span class="hljs-value">:<span class="hljs-number">0</span>px;</span>
+        }
+    }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <h3 id="typography">Typography</h3>
 
@@ -612,11 +684,11 @@ menu, <span class="hljs-tag">nav</span>, <span class="hljs-tag">output</span>, <
         </li>
         
         
-        <li id="section-33">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Scale type at a ratio of 1.14</p>
 
@@ -632,11 +704,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-34">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Set line-height to 1</p>
 
@@ -649,11 +721,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-35">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Global border-box</p>
 
@@ -666,11 +738,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-36">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Set heading sizes to size variables</p>
 

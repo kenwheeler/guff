@@ -1,6 +1,6 @@
 {
   "name": "guff",
-  "main": "./guff.scss"
+  "main": "./guff.scss",
   "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
