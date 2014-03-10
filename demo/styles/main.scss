@@ -36,7 +36,7 @@ a.download-button {
     font-weight: bold;
     background: #eee;
     border: 1px solid #ddd;
-    @include prefixer(border-radius, 5px, webkit moz o spec);
+    @include prefixer(border-radius, 5px, webkit moz);
     @include transition(all 50ms linear);
     margin: 0px 0px 20px;
 }
@@ -103,7 +103,7 @@ main {
             margin-bottom: 20px;
         }
         .float-tile {
-            @include span(4);
+            @include span(4, true);
             background: #fee;
             border: 1px solid #dcc;
             height: 100px;
@@ -112,8 +112,8 @@ main {
                 @include offset(4);
             }
         }
-        .inline-tile {
-            @include span(4, true);
+        .col-tile {
+            @include col(4, true);
             background: #fee;
             border: 1px solid #dcc;
             height: 100px;

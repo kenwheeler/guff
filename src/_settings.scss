@@ -3,20 +3,20 @@
 // Set base font size
 $rem-base: 16px !default;
 // Set line height ratio base
-$line-height-base: 26;
+$line-height-base: 26px !default;
 // Vertical rhythm ratio
-$type-rhythm-ratio: 1.14;
-
+$type-rhythm-ratio: 1.14 !default;
 // Desktop Media Query
-$desktop: "(min-width: 1024px)";
+$desktop: "(min-width: 1024px)" !default;
 // Tablet Media Query
-$tablet: "(min-width: 768px) and (max-width: 1023px)";
+$tablet: "(min-width: 768px) and (max-width: 1023px)" !default;
 // Mobile Media Query
-$mobile: "(max-width: 767px)";
-
+$mobile: "(max-width: 767px)" !default;
 // Set Grid Column Count
-$grid-columns: 12;
-// Set Grid Gutter
-$grid-gutter: 20px;
-// Set Grid Max Width
-$grid-max-width: 1024px;
+$grid-columns: 12 !default;
+// Set Grid Gutter (percentage)
+$grid-gutter: 4 !default;
+// Set Grid Padding (as px)
+$grid-padding: 20px !default;
+// Set Grid Max Width (as px)
+$grid-max-width: 1024px !default;

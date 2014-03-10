@@ -65,23 +65,23 @@
 // Set base font size
 $rem-base: 16px !default;
 // Set line height ratio base
-$line-height-base: 26;
+$line-height-base: 26px !default;
 // Vertical rhythm ratio
-$type-rhythm-ratio: 1.14;
-
+$type-rhythm-ratio: 1.14 !default;
 // Desktop Media Query
-$desktop: "(min-width: 1024px)";
+$desktop: "(min-width: 1024px)" !default;
 // Tablet Media Query
-$tablet: "(min-width: 768px) and (max-width: 1023px)";
+$tablet: "(min-width: 768px) and (max-width: 1023px)" !default;
 // Mobile Media Query
-$mobile: "(max-width: 767px)";
-
+$mobile: "(max-width: 767px)" !default;
 // Set Grid Column Count
-$grid-columns: 12;
-// Set Grid Gutter
-$grid-gutter: 20px;
-// Set Grid Max Width
-$grid-max-width: 1024px;
+$grid-columns: 12 !default;
+// Set Grid Gutter (percentage)
+$grid-gutter: 4 !default;
+// Set Grid Padding (as px)
+$grid-padding: 20px !default;
+// Set Grid Max Width (as px)
+$grid-max-width: 1024px !default;
 // ###Functions
 
 // Strips unit suffix from value
@@ -92,7 +92,7 @@ $grid-max-width: 1024px;
 // Converts to rem, utility for rem-calc
 @function convert-to-rem($value, $base-value: $rem-base)  {
   $value: strip-unit($value) / strip-unit($base-value) * 1rem;
-  @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+  @if (strip-unit($value) == 0) { $value: 0; } // Turn 0rem into 0
   @return $value;
 }
 
@@ -128,16 +128,38 @@ $grid-max-width: 1024px;
 }
 
 // Sets grid column width
-@mixin span($cols: 4,$gutter: $grid-gutter) {
-  width: percentage($cols/$grid-columns);
-  max-width: $grid-max-width;
-  padding-left: $gutter / 2;
-  padding-right: $gutter / 2;
+@mixin span($cols: 4, $padding: true) {
+  $column-width: $cols / $grid-columns;
+  @if $padding != false {
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+  width: percentage($column-width);
+  }
+  width: percentage($column-width);
+  float: left;
+}
+
+// Sets grid column width (with gutter)
+@mixin col($cols: 4, $gutter: false) {
+  $column-width: $cols / $grid-columns;
+  @if $gutter != false {
+    $single-col: (100% - ($grid-gutter * ($grid-columns - 1))) / $grid-columns;
+    width: ($single-col * $cols) + ($grid-gutter * ($cols - 1));
+    margin-left: percentage($grid-gutter / 100);
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      float: right;
+    }
+  }@else {
+    width: percentage($column-width);
+  }
   float: left;
 }
 
 // Sets grid offet margin
-@mixin offset($cols: 4,$gutter: '') {
+@mixin offset($cols: 4) {
   margin-left: percentage($cols/$grid-columns)
 }
 
@@ -149,29 +171,23 @@ $grid-max-width: 1024px;
 }
 
 // Renders fully prefixed transistion
-@mixin transition ($properties...) {
-  @if length($properties) >= 1 {
-    @include prefixer(transition, $properties, webkit moz spec);
-  }
-
-  @else {
-    $properties: all 0.15s ease-out 0s;
-    @include prefixer(transition, $properties, webkit moz spec);
-  }
+@mixin transition ($property: 0.15s) {
+    @include prefixer(transition, $property, webkit moz ms);
 }
 
 // Renders fully prefixed transform
 @mixin transform($property: none) {
-  @include prefixer(transform, $property, webkit moz ms spec);
+  @include prefixer(transform, $property, webkit moz ms);
 }
 
 // Renders fully prefixed box-sizing
 @mixin box-sizing ($box) {
-  @include prefixer(box-sizing, $box, webkit moz spec);
+  @include prefixer(box-sizing, $box, webkit moz);
 }
 
 // Utility for prefixing mixins
 @mixin prefixer ($property, $value, $prefixes) {
+        #{$property}: $value;
   @each $prefix in $prefixes {
     @if $prefix == webkit {
         -webkit-#{$property}: $value;
@@ -181,9 +197,6 @@ $grid-max-width: 1024px;
     }
     @else if $prefix == ms {
         -ms-#{$property}: $value;
-    }
-    @else if $prefix == spec {
-        #{$property}: $value;
     }
     @else  {
       @warn "Unrecognized prefix: #{$prefix}";
@@ -209,27 +222,38 @@ $grid-max-width: 1024px;
   }
 }
 
+// Placeholder for clear
+%clear {
+  @include clear;
+}
+
 // Text hider
 
 @mixin hide-text{
     overflow:hidden;
-    text-indent:-9999px;
-    display:block;
+    text-indent: 100%;
+    white-space: nowrap;
+}
+
+// Placeholder for hide-text
+%hide-text {
+  @include hide-text;
 }
 
 // Inline List
 
-@mixin inline-list {
+@mixin inline-list($float: true) {
     list-style-type:none;
     padding:0;
     margin:0;
     overflow:hidden;
     > li{
+        @if $float == true {
         display:block;
         float:left;
-        &:last-child{
-            margin-right:0px;
-        }
+      } @else {
+        display: inline-block;
+      }
     }
 }
 // ###Typography
@@ -245,9 +269,15 @@ $h1-size: round($h2-size * $type-rhythm-ratio);
 // Typographic Rhythm Mixin
 @mixin type($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){
 
-  // Set line-height
-  body {
-    line-height: $line-height-base / strip-unit($rem-base);
+  @if unit($line-height-base) == "px" {
+    // Set line-height
+    body {
+      line-height: strip-unit($line-height-base) / strip-unit($rem-base);
+    }
+  } @else {
+    body {
+      line-height: $line-height-base;
+    }
   }
 
   // Set heading sizes to size variables

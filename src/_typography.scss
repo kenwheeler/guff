@@ -11,9 +11,15 @@ $h1-size: round($h2-size * $type-rhythm-ratio);
 // Typographic Rhythm Mixin
 @mixin type($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){
 
-  // Set line-height
-  body {
-    line-height: $line-height-base / strip-unit($rem-base);
+  @if unit($line-height-base) == "px" {
+    // Set line-height
+    body {
+      line-height: strip-unit($line-height-base) / strip-unit($rem-base);
+    }
+  } @else {
+    body {
+      line-height: $line-height-base;
+    }
   }
 
   // Set heading sizes to size variables

@@ -64,7 +64,7 @@ div {
                 </header>
                 <code class="prettyprint">
 // cols : int - Column count
-// padding : px - Interior padding : optional
+// padding : boolean - Use grid padding : optional
 
 @include span(cols, padding);
                 </code>
@@ -79,6 +79,30 @@ div {
 
 .tile {
     @include span(4);
+}
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>Col Mixin</h2>
+                </header>
+                <code class="prettyprint">
+// Works like span but with margins
+// cols : int - Column count
+// gutter : boolean - Use grid gutter : optional
+
+@include col(cols, padding);
+                </code>
+                <div class="container">
+                    <div class="col-tile"></div>
+                    <div class="col-tile"></div>
+                    <div class="col-tile"></div>
+                </div>
+                <code class="prettyprint">
+// Requires container with clear() mixin
+
+.col {
+    @include col(4);
 }
                 </code>
             </section>
@@ -173,6 +197,7 @@ font-size: rem-calc(14);
 //  clear:both;
 // }
 //
+// Use @extend %clear; outside of media queries
 
 @include clear;
 
@@ -190,9 +215,10 @@ font-size: rem-calc(14);
 // Hide Text
 //
 // overflow:hidden;
-// text-indent:-9999px;
-// display:block;
+// text-indent: 100%;
+// white-space: nowrap;
 //
+// Use @extend %hide-text; outside of media queries
 
 @include hide-text;
 
@@ -205,12 +231,13 @@ font-size: rem-calc(14);
 //  > li{
 //      display:block;
 //      float:left;
-//      &:last-child{
-//          margin-right:0px;
-//      }
 //  }
 
 @include inline-list;
+
+// Pass false to render list items as inline-block instead of float
+
+@include inline-list(false);
 
                 </code>
             </section>
@@ -225,7 +252,9 @@ font-size: rem-calc(14);
 // $line-height-base - line height base
 // $type-rhythm-ratio - header scaling ratio
 
-@include type(16px, 26, 1.14);
+@include type(16px, 26px, 1.14);
+
+@include type(16px, 1.5, 1.14);
 
 // No arguments required, falls back to settings variables
 
@@ -261,27 +290,26 @@ bower install guff
                 </header>
                 <p>Override these variables at the top of your scss file.</p>
                 <code class="prettyprint">
-
 // Set base font size
 $rem-base: 16px !default;
-// Set line height ratio base
-$line-height-base: 26;
+// Set line height ratio base. Accepts px, em, rem or int values
+$line-height-base: 26px !default;
 // Vertical rhythm ratio
-$type-rhythm-ratio: 1.14;
-
+$type-rhythm-ratio: 1.14 !default;
 // Desktop Media Query
-$desktop: "(min-width: 1024px)";
+$desktop: "(min-width: 1024px)" !default;
 // Tablet Media Query
-$tablet: "(min-width: 768px) and (max-width: 1023px)";
+$tablet: "(min-width: 768px) and (max-width: 1023px)" !default;
 // Mobile Media Query
-$mobile: "(max-width: 767px)";
-
+$mobile: "(max-width: 767px)" !default;
 // Set Grid Column Count
-$grid-columns: 12;
-// Set Grid Gutter
-$grid-gutter: 20px;
-// Set Grid Max Width
-$grid-max-width: 1024px;
+$grid-columns: 12 !default;
+// Set Grid Gutter (percentage)
+$grid-gutter: 4 !default;
+// Set Grid Padding (as px)
+$grid-padding: 20px !default;
+// Set Grid Max Width (as px)
+$grid-max-width: 1024px !default;
                 </code>
             </section>
             <section>
