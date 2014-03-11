@@ -13,7 +13,6 @@
   @if $padding != false {
   padding-left: $grid-padding;
   padding-right: $grid-padding;
-  width: percentage($column-width);
   }
   width: percentage($column-width);
   float: left;
@@ -66,22 +65,11 @@
 }
 
 // Utility for prefixing mixins
-@mixin prefixer ($property, $value, $prefixes) {
-        #{$property}: $value;
+@mixin prefixer($property, $value, $prefixes: webkit moz) {
   @each $prefix in $prefixes {
-    @if $prefix == webkit {
-        -webkit-#{$property}: $value;
-    }
-    @else if $prefix == moz {
-        -moz-#{$property}: $value;
-    }
-    @else if $prefix == ms {
-        -ms-#{$property}: $value;
-    }
-    @else  {
-      @warn "Unrecognized prefix: #{$prefix}";
-    }
+    #{"-" + $prefix + "-" + $property}: $value;
   }
+  #{$property}: $value;
 }
 
 // Sets ellipsis overflow
@@ -94,30 +82,38 @@
 }
 
 // Clearfix include
-@mixin clear {
-  &:after {
+@mixin clear($extend: true) {
+  @if $extend {
+    @extend %clear;
+  } @else {
+    &:after {
     content:"";
     display:table;
     clear:both;
+    }
   }
 }
 
 // Placeholder for clear
 %clear {
-  @include clear;
+  @include clear(false);
 }
 
 // Text hider
 
-@mixin hide-text{
-    overflow:hidden;
-    text-indent: 100%;
-    white-space: nowrap;
+@mixin hide-text($extend: true) {
+  @if $extend {
+      @extend %hide-text;
+    } @else {
+      overflow:hidden;
+      text-indent: 100%;
+      white-space: nowrap;
+    }
 }
 
 // Placeholder for hide-text
 %hide-text {
-  @include hide-text;
+  @include hide-text(false);
 }
 
 // Inline List

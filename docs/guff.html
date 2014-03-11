@@ -648,22 +648,11 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> prefixer</span> ($property, $value, $prefixes) {</span>
-        #{$property}<span class="hljs-value">: $value;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> prefixer</span>($property, $value, $prefixes:<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span>) {</span>
   <span class="hljs-at_rule">@<span class="hljs-keyword">each</span> $prefix<span class="hljs-preprocessor"> in</span> $prefixes {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $prefix ==<span class="hljs-preprocessor"> webkit</span> {</span>
-        -webkit-#{$property}<span class="hljs-value">: $value;</span>
-    }
-    <span class="hljs-at_rule">@<span class="hljs-keyword">else</span><span class="hljs-preprocessor"> if</span> $prefix ==<span class="hljs-preprocessor"> moz</span> {</span>
-        -moz-#{$property}<span class="hljs-value">: $value;</span>
-    }
-    <span class="hljs-at_rule">@<span class="hljs-keyword">else</span><span class="hljs-preprocessor"> if</span> $prefix ==<span class="hljs-preprocessor"> ms</span> {</span>
-        -ms-#{$property}<span class="hljs-value">: $value;</span>
-    }
-    <span class="hljs-at_rule">@<span class="hljs-keyword">else</span>  {</span>
-      <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"Unrecognized prefix: #{$prefix}"</span>;</span>
-    }
+    #{"-" + $prefix + "-" + $property}<span class="hljs-value">: $value;</span>
   }
+  #{$property}<span class="hljs-value">: $value;</span>
 }</pre></div></div>
             
         </li>
@@ -700,11 +689,15 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> clear</span> {</span>
-  &amp;<span class="hljs-pseudo">:after</span> {
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> clear</span>($<span class="hljs-keyword">extend</span>:<span class="hljs-preprocessor"> true</span>) {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %clear;</span>
+  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+    &amp;<span class="hljs-pseudo">:after</span> {
     <span class="hljs-attribute">content</span><span class="hljs-value">:<span class="hljs-string">""</span>;</span>
     <span class="hljs-attribute">display</span><span class="hljs-value">:table;</span>
     <span class="hljs-attribute">clear</span><span class="hljs-value">:both;</span>
+    }
   }
 }</pre></div></div>
             
@@ -722,7 +715,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>%<span class="hljs-attribute">clear</span> {
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>(false);</span>
 }</pre></div></div>
             
         </li>
@@ -739,10 +732,14 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> hide-text</span>{</span>
-    <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
-    <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
-    <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> hide-text</span>($<span class="hljs-keyword">extend</span>:<span class="hljs-preprocessor"> true</span>) {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %hide-text;</span>
+    } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+      <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
+      <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+      <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+    }
 }</pre></div></div>
             
         </li>
@@ -759,7 +756,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>%hide-<span class="hljs-value">text</span> {
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> hide-text</span>;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> hide-text</span>(false);</span>
 }</pre></div></div>
             
         </li>
