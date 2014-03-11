@@ -202,29 +202,37 @@ $grid-max-width: 1024px !default;
 }
 
 // Clearfix include
-@mixin clear() {
-  &:after {
-  content:"";
-  display:table;
-  clear:both;
+@mixin clear($extend: true) {
+  @if $extend {
+    @extend %clear;
+  }
+  @else {
+    #{'&'}:after {
+    content:"";
+    display:table;
+    clear:both;
+    }
   }
 }
 
 // Placeholder for clear
-%clear {
-  &:after {
+%clear:after {
   content:"";
   display:table;
   clear:both;
-  }
 }
 
 // Text hider
 
-@mixin hide-text() {
+@mixin hide-text($extend: true) {
+  @if $extend {
+    @extend %hide-text;
+  }
+  @else {
   overflow:hidden;
   text-indent: 100%;
   white-space: nowrap;
+  }
 }
 
 // Placeholder for hide-text

@@ -200,6 +200,10 @@ font-size: rem-calc(14);
 
 @include clear;
 
+// clear(boolean) : Use false inside media queries to use mixin instead of placeholder
+
+@include clear(false);
+
 // Ellipsis Mixin - ellipsis($width)
 //
 // display: inline-block;
@@ -219,6 +223,10 @@ font-size: rem-calc(14);
 //
 
 @include hide-text;
+
+// hide-text(boolean) : Use false inside media queries to use mixin instead of placeholder
+
+@include hide-text(false);
 
 // Inline List (use on &lt;ul&gt;)
 //
