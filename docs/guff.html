@@ -488,7 +488,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> container</span> {</span>
   <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
   <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>();</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>(false);</span>
 }</pre></div></div>
             
         </li>
@@ -509,7 +509,6 @@
   <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $padding !=<span class="hljs-preprocessor"> false</span> {</span>
   <span class="hljs-attribute">padding-left</span><span class="hljs-value">: $grid-padding;</span>
   <span class="hljs-attribute">padding-right</span><span class="hljs-value">: $grid-padding;</span>
-  <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($column-width);</span>
   }
   <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($column-width);</span>
   <span class="hljs-attribute">float</span><span class="hljs-value">: left;</span>
@@ -715,7 +714,11 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>%<span class="hljs-attribute">clear</span> {
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>(false);</span>
+  &amp;<span class="hljs-pseudo">:after</span> {
+  <span class="hljs-attribute">content</span><span class="hljs-value">:<span class="hljs-string">""</span>;</span>
+  <span class="hljs-attribute">display</span><span class="hljs-value">:table;</span>
+  <span class="hljs-attribute">clear</span><span class="hljs-value">:both;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -756,7 +759,9 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>%hide-<span class="hljs-value">text</span> {
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> hide-text</span>(false);</span>
+  <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
+  <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+  <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
 }</pre></div></div>
             
         </li>

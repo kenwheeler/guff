@@ -80,9 +80,11 @@ main {
     margin: auto;
     section {
         @include span(12);
+        @include clear;
         header {
             margin: 0px 0px 20px 0px;
             text-align: center;
+            @include clear;
             h2 {
                 background: none;
                 font-size: rem-calc(24);

@@ -1,7 +1,3 @@
-%clear:after {
-  content: "";
-  display: table;
-  clear: both; }
 
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -137,14 +133,26 @@ main {
   width: 100%;
   max-width: 600px;
   margin: auto; }
+  main:after {
+    content: "";
+    display: table;
+    clear: both; }
   main section {
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
     float: left; }
+    main section:after {
+      content: "";
+      display: table;
+      clear: both; }
     main section header {
       margin: 0px 0px 20px 0px;
       text-align: center; }
+      main section header:after {
+        content: "";
+        display: table;
+        clear: both; }
       main section header h2 {
         background: none;
         font-size: 1.5rem;
@@ -162,6 +170,10 @@ main {
       width: 100%;
       max-width: 600px;
       margin-bottom: 20px; }
+      main section .container:after {
+        content: "";
+        display: table;
+        clear: both; }
     main section .float-tile {
       padding-left: 20px;
       padding-right: 20px;

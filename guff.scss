@@ -124,7 +124,7 @@ $grid-max-width: 1024px !default;
 @mixin container {
   width: 100%;
   max-width: $grid-max-width;
-  @include clear();
+  @include clear;
 }
 
 // Sets grid column width
@@ -202,38 +202,36 @@ $grid-max-width: 1024px !default;
 }
 
 // Clearfix include
-@mixin clear($extend: true) {
-  @if $extend {
-    @extend %clear;
-  } @else {
-    &:after {
-    content:"";
-    display:table;
-    clear:both;
-    }
+@mixin clear() {
+  &:after {
+  content:"";
+  display:table;
+  clear:both;
   }
 }
 
 // Placeholder for clear
 %clear {
-  @include clear(false);
+  &:after {
+  content:"";
+  display:table;
+  clear:both;
+  }
 }
 
 // Text hider
 
-@mixin hide-text($extend: true) {
-  @if $extend {
-      @extend %hide-text;
-    } @else {
-      overflow:hidden;
-      text-indent: 100%;
-      white-space: nowrap;
-    }
+@mixin hide-text() {
+  overflow:hidden;
+  text-indent: 100%;
+  white-space: nowrap;
 }
 
 // Placeholder for hide-text
 %hide-text {
-  @include hide-text(false);
+  overflow:hidden;
+  text-indent: 100%;
+  white-space: nowrap;
 }
 
 // Inline List
