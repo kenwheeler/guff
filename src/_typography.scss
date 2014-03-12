@@ -1,54 +1,67 @@
 // ###Typography
 
-// Scale type at $type-rhythm-ratio
-$h6-size: round(strip-unit($rem-base) * $type-rhythm-ratio);
-$h5-size: round($h6-size * $type-rhythm-ratio);
-$h4-size: round($h5-size * $type-rhythm-ratio);
-$h3-size: round($h4-size * $type-rhythm-ratio);
-$h2-size: round($h3-size * $type-rhythm-ratio);
-$h1-size: round($h2-size * $type-rhythm-ratio);
-
 // Typographic Rhythm Mixin
 @mixin type($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){
+  $valid: true;
+  @if type-of($rem-base) != "number" {
+    @warn "#{$rem-base} is not a number";
+    $valid: false;
+  }
+  @if type-of($line-height-base) != "number" {
+    @warn "#{$line-height-base} is not a number";
+    $valid: false;
+  }
+  @if type-of($type-rhythm-ratio) != "number" {
+    @warn "#{$type-rhythm-ratio} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    // Scale type at $type-rhythm-ratio
+    $h6-size: round(_strip-unit($rem-base) * $type-rhythm-ratio);
+    $h5-size: round($h6-size * $type-rhythm-ratio);
+    $h4-size: round($h5-size * $type-rhythm-ratio);
+    $h3-size: round($h4-size * $type-rhythm-ratio);
+    $h2-size: round($h3-size * $type-rhythm-ratio);
+    $h1-size: round($h2-size * $type-rhythm-ratio);
 
-  @if unit($line-height-base) == "px" {
-    // Set line-height
-    body {
-      line-height: strip-unit($line-height-base) / strip-unit($rem-base);
+    @if unit($line-height-base) == "px" {
+      // Set line-height
+      body {
+        line-height: _strip-unit($line-height-base) / _strip-unit($rem-base);
+      }
+    } @else {
+      body {
+        line-height: $line-height-base;
+      }
     }
-  } @else {
-    body {
-      line-height: $line-height-base;
+
+    // Set heading sizes to size variables
+    h1 {
+      font-size: rem-calc($h1-size);
+    }
+
+    h2 {
+      font-size: rem-calc($h2-size);
+    }
+
+    h3 {
+      font-size: rem-calc($h3-size);
+    }
+
+    h4 {
+      font-size: rem-calc($h4-size);
+    }
+
+    h5 {
+      font-size: rem-calc($h5-size);
+    }
+
+    h6 {
+      font-size: rem-calc($h6-size);
+    }
+
+    p {
+      font-size: $rem-base;
     }
   }
-
-  // Set heading sizes to size variables
-  h1 {
-    font-size: rem-calc($h1-size);
-  }
-
-  h2 {
-    font-size: rem-calc($h2-size);
-  }
-
-  h3 {
-    font-size: rem-calc($h3-size);
-  }
-
-  h4 {
-    font-size: rem-calc($h4-size);
-  }
-
-  h5 {
-    font-size: rem-calc($h5-size);
-  }
-
-  h6 {
-    font-size: rem-calc($h6-size);
-  }
-
-  p {
-    font-size: $rem-base;
-  }
-
 }

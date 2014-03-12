@@ -2,104 +2,242 @@
 
 // Sets container styles
 @mixin container {
-  width: 100%;
-  max-width: $grid-max-width;
-  @include clear;
+  $valid: true;
+  @if type-of($grid-max-width) != "number" {
+    @warn "grid-max-width: #{$grid-max-width} is not a number";
+    $valid: false;
+  }
+  @if type-of($rem-base) != "number" {
+    @warn "rem-base: #{$rem-base} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    width: 100%;
+    max-width: $grid-max-width;
+    @include clear;
+  }
 }
 
 // Sets col container styles
 @mixin col-container {
-  width: 100%;
-  text-align: justify !important;
-  text-justify: distribute-all-lines;
-  font-size: 0 !important;
-  max-width: $grid-max-width;
-  & > * {
-    text-align: left;
-    font-sze: rem-calc($rem-base);
+  $valid: true;
+  @if type-of($grid-max-width) != "number" {
+    @warn "grid-max-width: #{$grid-max-width} is not a number";
+    $valid: false;
   }
-  &:after {
-    content: '';
-    display: inline-block;
+  @if type-of($rem-base) != "number" {
+    @warn "rem-base: #{$rem-base} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
     width: 100%;
+    text-align: justify !important;
+    text-justify: distribute-all-lines;
+    font-size: 0 !important;
+    max-width: $grid-max-width;
+    & > * {
+      text-align: left;
+      font-sze: rem-calc($rem-base);
+    }
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+    }
   }
 }
 
 // Sets grid column width
 @mixin span($cols: 4, $padding: true) {
-  $column-width: $cols / $grid-columns;
-  @if $padding != false {
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
+  $valid: true;
+  @if type-of($cols) != "number" {
+    @warn "cols: #{$cols} is not a number";
+    $valid: false;
   }
-  width: percentage($column-width);
-  float: left;
+  @if type-of($padding) != "bool" {
+    @warn "padding: #{$padding} is not a boolean";
+    $valid: false;
+  }
+  @if type-of($grid-columns) != "number" {
+    @warn "grid-columns: #{$grid-columns} is not a number";
+    $valid: false;
+  }
+  @if type-of($grid-padding) != "number" {
+    @warn "grid-padding: #{$grid-padding} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    $column-width: $cols / $grid-columns;
+    @if $padding != false {
+    padding-left: $grid-padding;
+    padding-right: $grid-padding;
+    }
+    width: percentage($column-width);
+    float: left;
+  }
 }
 
 // Sets grid column width (with gutter)
 @mixin col($span: 4) {
-  $column-width: 100% / $grid-columns;
-  $gutter: ($grid-gutter * 0.75) / $grid-max-width * 100;
-  $span-width: $span * $column-width;
-  width: $span-width - $gutter;
-  vertical-align: top;
-  display: inline-block;
+  $valid: true;
+  @if type-of($span) != "number" {
+    @warn "span: #{$span} is not a number";
+    $valid: false;
+  }
+  @if type-of($grid-max-width) != "number" {
+    @warn "grid-max-width: #{$grid-max-width} is not a number";
+    $valid: false;
+  }
+  @if type-of($grid-columns) != "number" {
+    @warn "grid-columns: #{$grid-columns} is not a number";
+    $valid: false;
+  }
+  @if type-of($grid-gutter) != "number" {
+    @warn "grid-gutter: #{$grid-columns} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    $column-width: 100% / $grid-columns;
+    $gutter: ($grid-gutter * 0.75) / $grid-max-width * 100;
+    $span-width: $span * $column-width;
+    width: $span-width - $gutter;
+    vertical-align: top;
+    display: inline-block;
+  }
 }
 
 // Sets grid offet margin
 @mixin offset($cols: 4) {
-  margin-left: percentage($cols/$grid-columns)
+  $valid: true;
+  @if type-of($cols) != "number" {
+    @warn "cols: #{$cols} is not a number";
+    $valid: false;
+  }
+  @if type-of($grid-columns) != "number" {
+    @warn "grid-columns: #{$grid-columns} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    margin-left: percentage($cols/$grid-columns);
+  }
 }
 
 // Wraps interior content in a media query
 @mixin breakpoint($querystring) {
-  @media #{$querystring} {
-    @content;
+  $valid: true;
+  @if type-of($querystring) != "string" {
+    @warn "querystring: #{$querystring} is not a string";
+    $valid: false;
+  }
+  @if $valid == true {
+    @media #{$querystring} {
+      @content;
+    }
   }
 }
 
 // Renders fully prefixed transistion
 @mixin transition ($property: 0.15s) {
+  $valid: false;
+  @if type-of($property) == "string" {
+    $valid: true;
+  }
+  @if type-of($property) == "list" {
+    $valid: true;
+  }
+  @if type-of($property) == "number" {
+    $valid: true;
+  }
+  @if $valid == true {
     @include prefixer(transition, $property, webkit moz ms);
+  } @else {
+    @warn "property: #{$property} is not a valid argument";
+  }
 }
 
 // Renders fully prefixed transform
 @mixin transform($property: none) {
-  @include prefixer(transform, $property, webkit moz ms);
+  $valid: false;
+  @if type-of($property) == "string" {
+    $valid: true;
+  }
+  @if type-of($property) == "list" {
+    $valid: true;
+  }
+  @if $valid == true {
+    @include prefixer(transform, $property, webkit moz ms);
+  } @else {
+    @warn "property: #{$property} is not a valid argument";
+  }
 }
 
 // Renders fully prefixed box-sizing
-@mixin box-sizing ($box) {
-  @include prefixer(box-sizing, $box, webkit moz);
+@mixin box-sizing ($box: border-box) {
+  $valid: true;
+  @if type-of($box) != "string" {
+    @warn "box: #{$box} is not a string";
+    $valid: false;
+  }
+  @if $valid == true {
+    @include prefixer(box-sizing, $box, webkit moz);
+  }
 }
 
 // Utility for prefixing mixins
 @mixin prefixer($property, $value, $prefixes: webkit moz) {
-  @each $prefix in $prefixes {
-    #{"-" + $prefix + "-" + $property}: $value;
+  $valid: false;
+  @if type-of($property) == "string" {
+    $valid: true;
   }
-  #{$property}: $value;
+  @if type-of($prefixes) == "list" {
+    $valid: true;
+  }
+  @if type-of($prefixes) == "string" {
+    $valid: true;
+  }
+  @if $valid == true {
+    @each $prefix in $prefixes {
+      #{"-" + $prefix + "-" + $property}: $value;
+    }
+    #{$property}: $value;
+  } @else {
+    @warn "Invalid arguments supplied";
+  }
 }
 
 // Sets ellipsis overflow
 @mixin ellipsis($width: 100%) {
-  display: inline-block;
-  max-width: $width;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  $valid: true;
+  @if type-of($width) != "number" {
+    @warn "width: #{$width} is not a number";
+    $valid: false;
+  }
+  @if $valid == true {
+    display: inline-block;
+    max-width: $width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 // Clearfix include
 @mixin clear($extend: true) {
-  @if $extend {
-    @extend %clear;
+  $valid: true;
+  @if type-of($extend) != "bool" {
+    @warn "extend: #{$extend} is not a boolean";
+    $valid: false;
   }
-  @else {
-    #{'&'}:after {
-    content:"";
-    display:table;
-    clear:both;
+  @if $valid == true {
+    @if $extend {
+      @extend %clear;
+    }
+    @else {
+      #{'&'}:after {
+      content:"";
+      display:table;
+      clear:both;
+      }
     }
   }
 }
@@ -114,13 +252,20 @@
 // Text hider
 
 @mixin hide-text($extend: true) {
-  @if $extend {
-    @extend %hide-text;
+  $valid: true;
+  @if type-of($extend) != "bool" {
+    @warn "extend: #{$extend} is not a boolean";
+    $valid: false;
   }
-  @else {
-  overflow:hidden;
-  text-indent: 100%;
-  white-space: nowrap;
+  @if $valid == true {
+    @if $extend {
+      @extend %hide-text;
+    }
+    @else {
+    overflow:hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    }
   }
 }
 
@@ -134,6 +279,12 @@
 // Inline List
 
 @mixin inline-list($float: true) {
+  $valid: true;
+  @if type-of($float) != "bool" {
+    @warn "float: #{$float} is not a boolean";
+    $valid: false;
+  }
+  @if $valid == true {
     list-style-type:none;
     padding:0;
     margin:0;
@@ -146,4 +297,5 @@
         display: inline-block;
       }
     }
+  }
 }

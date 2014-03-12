@@ -17,6 +17,19 @@ gulp.task('styles', function () {
       .pipe($.size());
 });
 
+gulp.task('lib', function () {
+    gulp.src([
+      'src/_reset.scss',
+      'src/_settings.scss',
+      'src/_functions.scss',
+      'src/_mixins.scss',
+      'src/_typography.scss'
+      ])
+      .pipe($.concat("_guff.scss"))
+      .pipe(gulp.dest('./lib/stylesheets/'))
+      .pipe($.size());
+});
+
 gulp.task('demo', function () {
     gulp.src('demo/styles/main.scss')
       .pipe($.sass({
@@ -32,7 +45,7 @@ gulp.task('docs', function(){
     .pipe(gulp.dest('./docs'))
 });
 
-gulp.task('default', ['styles','demo','docs']);
+gulp.task('default', ['styles','lib','demo','docs']);
 
 gulp.task('connect', $.connect.server({
     root: ['demo'],
@@ -49,6 +62,6 @@ gulp.task('watch', ['connect'], function () {
         return gulp.src(event.path)
             .pipe($.connect.reload());
     });
-    gulp.watch(['src/**/*.scss'], ['styles','docs']);
+    gulp.watch(['src/**/*.scss'], ['styles','lib','docs']);
     gulp.watch(['demo/styles/**/*.scss'], ['demo']);
 });

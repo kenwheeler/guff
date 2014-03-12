@@ -394,7 +394,11 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> strip-unit</span>($num) {</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> _strip-unit</span>($num) {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($num) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"num: #{$num} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
   <span class="hljs-at_rule">@return $num / ($num *<span class="hljs-preprocessor"> 0</span> +<span class="hljs-preprocessor"> 1</span>);</span>
 }</pre></div></div>
             
@@ -411,9 +415,17 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> convert-to-rem</span>($value, $base-value: $rem-base)  {</span>
-  $value<span class="hljs-value">: strip-unit($value) / strip-unit($base-value) * <span class="hljs-number">1</span>rem;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> (<span class="hljs-function">strip-unit($value)</span> ==<span class="hljs-preprocessor"> 0</span>) {</span> $value<span class="hljs-value">: <span class="hljs-number">0</span>;</span> } <span class="hljs-comment">// Turn 0rem into 0</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> _convert-to-rem</span>($value, $base-value: $rem-base)  {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($value) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"value: #{$value} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($base-value) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"base-value: #{$base-value} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
+  $value<span class="hljs-value">: _strip-unit($value) / _strip-unit($base-value) * <span class="hljs-number">1</span>rem;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> (_<span class="hljs-function">strip-unit($value)</span> ==<span class="hljs-preprocessor"> 0</span>) {</span> $value<span class="hljs-value">: <span class="hljs-number">0</span>;</span> } <span class="hljs-comment">// Turn 0rem into 0</span>
   <span class="hljs-at_rule">@return $value;</span>
 }</pre></div></div>
             
@@ -431,13 +443,19 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> rem-calc</span>($values, $base-value: $rem-base) {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($values) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"values: #{$values} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($base-value) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"base-value: #{$base-value} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
   $max<span class="hljs-value">: length($values);</span>
-
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $max ==<span class="hljs-preprocessor"> 1</span> {</span> <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> convert-to-rem</span>(<span class="hljs-function">nth($values, <span class="hljs-number">1</span>)</span>, $base-value);</span> }
-
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $max ==<span class="hljs-preprocessor"> 1</span> {</span> <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> _convert-to-rem</span>(<span class="hljs-function">nth($values, <span class="hljs-number">1</span>)</span>, $base-value);</span> }
   $remValues<span class="hljs-value">: ();</span>
   <span class="hljs-at_rule">@<span class="hljs-keyword">for</span> $i<span class="hljs-preprocessor"> from</span><span class="hljs-preprocessor"> 1</span><span class="hljs-preprocessor"> through</span> $max {</span>
-    $remValues<span class="hljs-value">: append($remValues, convert-to-rem(nth($values, $i), $base-value));</span>
+    $remValues<span class="hljs-value">: append($remValues, _convert-to-rem(nth($values, $i), $base-value));</span>
   }
   <span class="hljs-at_rule">@return $remValues;</span>
 }</pre></div></div>
@@ -456,6 +474,14 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>) {</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($cols) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"cols: #{$cols} is not a number"</span>;</span>
+    <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-columns) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-columns: #{$grid-columns} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
   <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> percentage</span>($cols/$grid-columns);</span>
 }</pre></div></div>
             
@@ -468,13 +494,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>Gets grid gutter</p>
+              <h3 id="mixins">Mixins</h3>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@function<span class="hljs-preprocessor"> gutter</span>(){</span>
-  <span class="hljs-at_rule">@return $grid-gutter;</span>
-}</pre></div></div>
             
         </li>
         
@@ -485,9 +507,26 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <h3 id="mixins">Mixins</h3>
+              <p>Sets container styles</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> container</span> {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-max-width) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-max-width: #{$grid-max-width} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($rem-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"rem-base: #{$rem-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+    <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>;</span>
+  }
+}</pre></div></div>
             
         </li>
         
@@ -498,14 +537,36 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>Sets container styles</p>
+              <p>Sets col container styles</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> container</span> {</span>
-  <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
-  <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col-container</span> {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-max-width) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-max-width: #{$grid-max-width} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($rem-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"rem-base: #{$rem-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+    <span class="hljs-attribute">text-align</span><span class="hljs-value">: justify <span class="hljs-important">!important</span>;</span>
+    <span class="hljs-value">text</span>-<span class="hljs-value">justify</span><span class="hljs-value">: distribute-all-lines;</span>
+    <span class="hljs-attribute">font-size</span><span class="hljs-value">: <span class="hljs-number">0</span> <span class="hljs-important">!important</span>;</span>
+    <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
+    &amp; &gt; * {
+      <span class="hljs-attribute">text-align</span><span class="hljs-value">: left;</span>
+      <span class="hljs-attribute">font</span>-sze<span class="hljs-value">: rem-calc($rem-base);</span>
+    }
+    &amp;<span class="hljs-pseudo">:after</span> {
+      <span class="hljs-attribute">content</span><span class="hljs-value">: <span class="hljs-string">''</span>;</span>
+      <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+      <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+    }
+  }
 }</pre></div></div>
             
         </li>
@@ -517,24 +578,36 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>Sets col container styles</p>
+              <p>Sets grid column width</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col-container</span> {</span>
-  <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
-  <span class="hljs-attribute">text-align</span><span class="hljs-value">: justify <span class="hljs-important">!important</span>;</span>
-  <span class="hljs-value">text</span>-<span class="hljs-value">justify</span><span class="hljs-value">: distribute-all-lines;</span>
-  <span class="hljs-attribute">font-size</span><span class="hljs-value">: <span class="hljs-number">0</span> <span class="hljs-important">!important</span>;</span>
-  <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
-  &amp; &gt; * {
-    <span class="hljs-attribute">text-align</span><span class="hljs-value">: left;</span>
-    <span class="hljs-attribute">font</span>-sze<span class="hljs-value">: rem-calc($rem-base);</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>, $padding:<span class="hljs-preprocessor"> true</span>) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($cols) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"cols: #{$cols} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
   }
-  &amp;<span class="hljs-pseudo">:after</span> {
-    <span class="hljs-attribute">content</span><span class="hljs-value">: <span class="hljs-string">''</span>;</span>
-    <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
-    <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($padding) != <span class="hljs-string">"bool"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"padding: #{$padding} is not a boolean"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-columns) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-columns: #{$grid-columns} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-padding) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-padding: #{$grid-padding} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    $<span class="hljs-attribute">column-width</span><span class="hljs-value">: $cols / $grid-columns;</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $padding !=<span class="hljs-preprocessor"> false</span> {</span>
+    <span class="hljs-attribute">padding-left</span><span class="hljs-value">: $grid-padding;</span>
+    <span class="hljs-attribute">padding-right</span><span class="hljs-value">: $grid-padding;</span>
+    }
+    <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($column-width);</span>
+    <span class="hljs-attribute">float</span><span class="hljs-value">: left;</span>
   }
 }</pre></div></div>
             
@@ -547,18 +620,36 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>Sets grid column width</p>
+              <p>Sets grid column width (with gutter)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> span</span>($cols:<span class="hljs-preprocessor"> 4</span>, $padding:<span class="hljs-preprocessor"> true</span>) {</span>
-  $<span class="hljs-attribute">column-width</span><span class="hljs-value">: $cols / $grid-columns;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $padding !=<span class="hljs-preprocessor"> false</span> {</span>
-  <span class="hljs-attribute">padding-left</span><span class="hljs-value">: $grid-padding;</span>
-  <span class="hljs-attribute">padding-right</span><span class="hljs-value">: $grid-padding;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col</span>($span:<span class="hljs-preprocessor"> 4</span>) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($span) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"span: #{$span} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
   }
-  <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($column-width);</span>
-  <span class="hljs-attribute">float</span><span class="hljs-value">: left;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-max-width) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-max-width: #{$grid-max-width} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-columns) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-columns: #{$grid-columns} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-gutter) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-gutter: #{$grid-columns} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    $<span class="hljs-attribute">column-width</span><span class="hljs-value">: <span class="hljs-number">100</span>% / $grid-columns;</span>
+    $gutter<span class="hljs-value">: ($grid-gutter * <span class="hljs-number">0.75</span>) / $grid-max-width * <span class="hljs-number">100</span>;</span>
+    $<span class="hljs-tag">span</span>-<span class="hljs-attribute">width</span><span class="hljs-value">: $span * $column-width;</span>
+    <span class="hljs-attribute">width</span><span class="hljs-value">: $span-width - $gutter;</span>
+    <span class="hljs-attribute">vertical-align</span><span class="hljs-value">: top;</span>
+    <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -570,17 +661,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>Sets grid column width (with gutter)</p>
+              <p>Sets grid offet margin</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col</span>($span:<span class="hljs-preprocessor"> 4</span>) {</span>
-  $<span class="hljs-attribute">column-width</span><span class="hljs-value">: <span class="hljs-number">100</span>% / $grid-columns;</span>
-  $gutter<span class="hljs-value">: ($grid-gutter * <span class="hljs-number">0.75</span>) / $grid-max-width * <span class="hljs-number">100</span>;</span>
-  $<span class="hljs-tag">span</span>-<span class="hljs-attribute">width</span><span class="hljs-value">: $span * $column-width;</span>
-  <span class="hljs-attribute">width</span><span class="hljs-value">: $span-width - $gutter;</span>
-  <span class="hljs-attribute">vertical-align</span><span class="hljs-value">: top;</span>
-  <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> offset</span>($cols:<span class="hljs-preprocessor"> 4</span>) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($cols) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"cols: #{$cols} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($grid-columns) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"grid-columns: #{$grid-columns} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-attribute">margin-left</span><span class="hljs-value">: percentage($cols/$grid-columns);</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -592,15 +689,22 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>Sets grid offet margin</p>
+              <p>Wraps interior content in a media query</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> offset</span>($cols:<span class="hljs-preprocessor"> 4</span>) {</span>
-  <span class="hljs-attribute">margin-left</span><span class="hljs-value">: percentage($cols/$grid-columns)
-}
-
-</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> breakpoint</span>($querystring) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($querystring) != <span class="hljs-string">"string"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"querystring: #{$querystring} is not a string"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">media</span> #{</span>$querystring} {
+      <span class="hljs-at_rule">@<span class="hljs-keyword">content</span>;</span>
+    }
+  }
+}</pre></div></div>
             
         </li>
         
@@ -611,13 +715,25 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>Wraps interior content in a media query</p>
+              <p>Renders fully prefixed transistion</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> breakpoint</span>($querystring) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">media</span> #{</span>$querystring} {
-    <span class="hljs-at_rule">@<span class="hljs-keyword">content</span>;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> transition</span> ($property:<span class="hljs-preprocessor"> 0.15s</span>) {</span>
+  $valid<span class="hljs-value">: false;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"string"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"list"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"number"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(transition, $property,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span><span class="hljs-preprocessor"> ms</span>);</span>
+  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"property: #{$property} is not a valid argument"</span>;</span>
   }
 }</pre></div></div>
             
@@ -630,12 +746,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>Renders fully prefixed transistion</p>
+              <p>Renders fully prefixed transform</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> transition</span> ($property:<span class="hljs-preprocessor"> 0.15s</span>) {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(transition, $property,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span><span class="hljs-preprocessor"> ms</span>);</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> transform</span>($property:<span class="hljs-preprocessor"> none</span>) {</span>
+  $valid<span class="hljs-value">: false;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"string"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"list"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(transform, $property,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span><span class="hljs-preprocessor"> ms</span>);</span>
+  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"property: #{$property} is not a valid argument"</span>;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -647,12 +774,19 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>Renders fully prefixed transform</p>
+              <p>Renders fully prefixed box-sizing</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> transform</span>($property:<span class="hljs-preprocessor"> none</span>) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(transform, $property,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span><span class="hljs-preprocessor"> ms</span>);</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> box-sizing</span> ($box:<span class="hljs-preprocessor"> border-box</span>) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($box) != <span class="hljs-string">"string"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"box: #{$box} is not a string"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(box-sizing, $box,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span>);</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -664,12 +798,29 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <p>Renders fully prefixed box-sizing</p>
+              <p>Utility for prefixing mixins</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> box-sizing</span> ($box) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> prefixer</span>(box-sizing, $box,<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span>);</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> prefixer</span>($property, $value, $prefixes:<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span>) {</span>
+  $valid<span class="hljs-value">: false;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) == <span class="hljs-string">"string"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($prefixes) == <span class="hljs-string">"list"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($prefixes) == <span class="hljs-string">"string"</span> {</span>
+    $valid<span class="hljs-value">: true;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">each</span> $prefix<span class="hljs-preprocessor"> in</span> $prefixes {</span>
+      #{"-" + $prefix + "-" + $property}<span class="hljs-value">: $value;</span>
+    }
+    #{$property}<span class="hljs-value">: $value;</span>
+  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"Invalid arguments supplied"</span>;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -681,15 +832,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>Utility for prefixing mixins</p>
+              <p>Sets ellipsis overflow</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> prefixer</span>($property, $value, $prefixes:<span class="hljs-preprocessor"> webkit</span><span class="hljs-preprocessor"> moz</span>) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">each</span> $prefix<span class="hljs-preprocessor"> in</span> $prefixes {</span>
-    #{"-" + $prefix + "-" + $property}<span class="hljs-value">: $value;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> ellipsis</span>($width:<span class="hljs-preprocessor"> 100</span>%) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($width) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"width: #{$width} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
   }
-  #{$property}<span class="hljs-value">: $value;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+    <span class="hljs-attribute">max-width</span><span class="hljs-value">: $width;</span>
+    <span class="hljs-attribute">overflow</span><span class="hljs-value">: hidden;</span>
+    <span class="hljs-attribute">text-overflow</span><span class="hljs-value">: ellipsis;</span>
+    <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -701,16 +860,28 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
-              <p>Sets ellipsis overflow</p>
+              <p>Clearfix include</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> ellipsis</span>($width:<span class="hljs-preprocessor"> 100</span>%) {</span>
-  <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
-  <span class="hljs-attribute">max-width</span><span class="hljs-value">: $width;</span>
-  <span class="hljs-attribute">overflow</span><span class="hljs-value">: hidden;</span>
-  <span class="hljs-attribute">text-overflow</span><span class="hljs-value">: ellipsis;</span>
-  <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+            <div class="content"><div class='highlight'><pre>@mixin clear($extend: true) {
+  $valid: true;
+  @if type-of($extend) != "bool" {
+    @warn "extend: #{$extend} is not a boolean";
+    $valid: false;
+  }
+  @if $valid == true {
+    @if $extend {
+      @extend %clear;
+    }
+    @else {
+      #{'&amp;'}:after {
+      content:"";
+      display:table;
+      clear:both;
+      }
+    }
+  }
 }</pre></div></div>
             
         </li>
@@ -721,32 +892,6 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
-              </div>
-              <p>Clearfix include</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>@mixin clear($extend: true) {
-  @if $extend {
-    @extend %clear;
-  }
-  @else {
-    #{'&amp;'}:after {
-    content:"";
-    display:table;
-    clear:both;
-    }
-  }
-}</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-41">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Placeholder for clear</p>
 
@@ -761,11 +906,11 @@
         </li>
         
         
-        <li id="section-42">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Text hider</p>
 
@@ -773,24 +918,31 @@
             
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> hide-text</span>($<span class="hljs-keyword">extend</span>:<span class="hljs-preprocessor"> true</span>) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %hide-text;</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($<span class="hljs-keyword">extend</span>) != <span class="hljs-string">"bool"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"extend: #{$extend} is not a boolean"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
   }
-  <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
-  <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
-  <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
-  <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %hide-text;</span>
+    }
+    <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+    <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
+    <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+    <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+    }
   }
 }</pre></div></div>
             
         </li>
         
         
-        <li id="section-43">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Placeholder for hide-text</p>
 
@@ -805,11 +957,11 @@
         </li>
         
         
-        <li id="section-44">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Inline List</p>
 
@@ -817,6 +969,12 @@
             
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> inline-list</span>($float:<span class="hljs-preprocessor"> true</span>) {</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($float) != <span class="hljs-string">"bool"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"float: #{$float} is not a boolean"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
     <span class="hljs-attribute">list-style-type</span><span class="hljs-value">:none;</span>
     <span class="hljs-attribute">padding</span><span class="hljs-value">:<span class="hljs-number">0</span>;</span>
     <span class="hljs-attribute">margin</span><span class="hljs-value">:<span class="hljs-number">0</span>;</span>
@@ -829,7 +987,21 @@
         <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
       }
     }
+  }
 }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <h3 id="typography">Typography</h3>
+
+            </div>
             
         </li>
         
@@ -840,9 +1012,25 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <h3 id="typography">Typography</h3>
+              <p>Typographic Rhythm Mixin</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> type</span>($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($rem-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$rem-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($line-height-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$line-height-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($type-rhythm-ratio) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$type-rhythm-ratio} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span></pre></div></div>
             
         </li>
         
@@ -857,12 +1045,14 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$<span class="hljs-tag">h6</span>-size<span class="hljs-value">: round(strip-unit($rem-base) * $type-rhythm-ratio);</span>
-$<span class="hljs-tag">h5</span>-size<span class="hljs-value">: round($h6-size * $type-rhythm-ratio);</span>
-$<span class="hljs-tag">h4</span>-size<span class="hljs-value">: round($h5-size * $type-rhythm-ratio);</span>
-$<span class="hljs-tag">h3</span>-size<span class="hljs-value">: round($h4-size * $type-rhythm-ratio);</span>
-$<span class="hljs-tag">h2</span>-size<span class="hljs-value">: round($h3-size * $type-rhythm-ratio);</span>
-$<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size * $type-rhythm-ratio);</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $<span class="hljs-tag">h6</span>-size<span class="hljs-value">: round(_strip-unit($rem-base) * $type-rhythm-ratio);</span>
+    $<span class="hljs-tag">h5</span>-size<span class="hljs-value">: round($h6-size * $type-rhythm-ratio);</span>
+    $<span class="hljs-tag">h4</span>-size<span class="hljs-value">: round($h5-size * $type-rhythm-ratio);</span>
+    $<span class="hljs-tag">h3</span>-size<span class="hljs-value">: round($h4-size * $type-rhythm-ratio);</span>
+    $<span class="hljs-tag">h2</span>-size<span class="hljs-value">: round($h3-size * $type-rhythm-ratio);</span>
+    $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size * $type-rhythm-ratio);</span>
+
+    <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> unit</span>($line-height-base) == <span class="hljs-string">"px"</span> {</span></pre></div></div>
             
         </li>
         
@@ -873,13 +1063,18 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
-              <p>Typographic Rhythm Mixin</p>
+              <p>Set line-height</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> type</span>($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){</span>
-
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> unit</span>($line-height-base) == <span class="hljs-string">"px"</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-tag">body</span> {
+        <span class="hljs-attribute">line-height</span><span class="hljs-value">: _strip-unit($line-height-base) / _strip-unit($rem-base);</span>
+      }
+    } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
+      <span class="hljs-tag">body</span> {
+        <span class="hljs-attribute">line-height</span><span class="hljs-value">: $line-height-base;</span>
+      }
+    }</pre></div></div>
             
         </li>
         
@@ -890,60 +1085,38 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
-              <p>Set line-height</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-tag">body</span> {
-      <span class="hljs-attribute">line-height</span><span class="hljs-value">: strip-unit($line-height-base) / strip-unit($rem-base);</span>
-    }
-  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
-    <span class="hljs-tag">body</span> {
-      <span class="hljs-attribute">line-height</span><span class="hljs-value">: $line-height-base;</span>
-    }
-  }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-49">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
-              </div>
               <p>Set heading sizes to size variables</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-tag">h1</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h1-size);</span>
-  }
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-tag">h1</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h1-size);</span>
+    }
 
-  <span class="hljs-tag">h2</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h2-size);</span>
-  }
+    <span class="hljs-tag">h2</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h2-size);</span>
+    }
 
-  <span class="hljs-tag">h3</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h3-size);</span>
-  }
+    <span class="hljs-tag">h3</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h3-size);</span>
+    }
 
-  <span class="hljs-tag">h4</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h4-size);</span>
-  }
+    <span class="hljs-tag">h4</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h4-size);</span>
+    }
 
-  <span class="hljs-tag">h5</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h5-size);</span>
-  }
+    <span class="hljs-tag">h5</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h5-size);</span>
+    }
 
-  <span class="hljs-tag">h6</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h6-size);</span>
-  }
+    <span class="hljs-tag">h6</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h6-size);</span>
+    }
 
-  <span class="hljs-tag">p</span> {
-    <span class="hljs-attribute">font-size</span><span class="hljs-value">: $rem-base;</span>
+    <span class="hljs-tag">p</span> {
+      <span class="hljs-attribute">font-size</span><span class="hljs-value">: $rem-base;</span>
+    }
   }
-
 }</pre></div></div>
             
         </li>

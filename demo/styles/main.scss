@@ -68,7 +68,7 @@ header.primary {
         padding: 0px 0px 20px 0px;
     }
     @include breakpoint($mobile) {
-        @include span(12, 20px);
+        @include span(12);
         h1 {
             @include span(12);
             @include offset(0);
