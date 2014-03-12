@@ -14,8 +14,8 @@ $tablet: "(min-width: 768px) and (max-width: 1023px)" !default;
 $mobile: "(max-width: 767px)" !default;
 // Set Grid Column Count
 $grid-columns: 12 !default;
-// Set Grid Gutter (percentage)
-$grid-gutter: 4 !default;
+// Set Grid Gutter (as px)
+$grid-gutter: 20px !default;
 // Set Grid Padding (as px)
 $grid-padding: 20px !default;
 // Set Grid Max Width (as px)

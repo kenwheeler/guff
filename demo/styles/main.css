@@ -185,17 +185,27 @@ main {
       float: left; }
       main section .float-tile.offset-tile {
         margin-left: 33.33333%; }
+    main section .col-container {
+      width: 100%;
+      text-align: justify !important;
+      text-justify: distribute-all-lines;
+      font-size: 0 !important;
+      max-width: 600px;
+      margin-bottom: 20px; }
+      main section .col-container > * {
+        text-align: left;
+        font-sze: 1rem; }
+      main section .col-container:after {
+        content: '';
+        display: inline-block;
+        width: 100%; }
     main section .col-tile {
-      width: 30.66667%;
-      margin-left: 4%;
-      float: left;
-      background: #fee;
+      width: 30.83333%;
+      vertical-align: top;
+      display: inline-block;
       border: 1px solid #dcc;
+      background: #fee;
       height: 100px; }
-      main section .col-tile:first-child {
-        margin-left: 0; }
-      main section .col-tile:last-child {
-        float: right; }
 
 footer.primary {
   width: 100%;

@@ -114,10 +114,14 @@ main {
                 @include offset(4);
             }
         }
+        .col-container {
+            @include col-container();
+            margin-bottom: 20px;
+        }
         .col-tile {
-            @include col(4, true);
-            background: #fee;
+            @include col(4);
             border: 1px solid #dcc;
+            background: #fee;
             height: 100px;
         }
     }

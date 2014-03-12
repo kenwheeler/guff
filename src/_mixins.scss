@@ -7,6 +7,24 @@
   @include clear;
 }
 
+// Sets col container styles
+@mixin col-container {
+  width: 100%;
+  text-align: justify !important;
+  text-justify: distribute-all-lines;
+  font-size: 0 !important;
+  max-width: $grid-max-width;
+  & > * {
+    text-align: left;
+    font-sze: rem-calc($rem-base);
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}
+
 // Sets grid column width
 @mixin span($cols: 4, $padding: true) {
   $column-width: $cols / $grid-columns;
@@ -19,22 +37,13 @@
 }
 
 // Sets grid column width (with gutter)
-@mixin col($cols: 4, $gutter: false) {
-  $column-width: $cols / $grid-columns;
-  @if $gutter != false {
-    $single-col: (100% - ($grid-gutter * ($grid-columns - 1))) / $grid-columns;
-    width: ($single-col * $cols) + ($grid-gutter * ($cols - 1));
-    margin-left: percentage($grid-gutter / 100);
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      float: right;
-    }
-  }@else {
-    width: percentage($column-width);
-  }
-  float: left;
+@mixin col($span: 4) {
+  $column-width: 100% / $grid-columns;
+  $gutter: ($grid-gutter * 0.75) / $grid-max-width * 100;
+  $span-width: $span * $column-width;
+  width: $span-width - $gutter;
+  vertical-align: top;
+  display: inline-block;
 }
 
 // Sets grid offet margin

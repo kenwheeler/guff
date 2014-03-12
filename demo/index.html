@@ -57,6 +57,13 @@ div {
     @include container;
 }
                 </code>
+                <code class="prettyprint">
+// Use on divs wrapping col mixins
+
+.container {
+    @include col-container;
+}
+                </code>
             </section>
             <section>
                 <header>
@@ -74,7 +81,7 @@ div {
                     <div class="float-tile"></div>
                 </div>
                 <code class="prettyprint">
-// Requires container with clear() mixin
+// Requires container with container() mixin
 // Use span function to just get width
 
 .tile {
@@ -87,19 +94,18 @@ div {
                     <h2>Col Mixin</h2>
                 </header>
                 <code class="prettyprint">
-// Works like span but with margins
+// Creates columns with margins using the justify method
 // cols : int - Column count
-// gutter : boolean - Use grid gutter : optional
 
-@include col(cols, padding);
+@include col(cols);
                 </code>
-                <div class="container">
+                <div class="col-container">
                     <div class="col-tile"></div>
                     <div class="col-tile"></div>
                     <div class="col-tile"></div>
                 </div>
                 <code class="prettyprint">
-// Requires container with clear() mixin
+// Requires a container with col-container mixin
 
 .col {
     @include col(4);

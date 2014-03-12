@@ -315,11 +315,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>Set Grid Gutter (percentage)</p>
+              <p>Set Grid Gutter (as px)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>$grid-gutter<span class="hljs-value">: <span class="hljs-number">4</span> !default;</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>$grid-gutter<span class="hljs-value">: <span class="hljs-number">20</span>px !default;</span></pre></div></div>
             
         </li>
         
@@ -488,7 +488,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> container</span> {</span>
   <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
   <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>(false);</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> clear</span>;</span>
 }</pre></div></div>
             
         </li>
@@ -499,6 +499,36 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Sets col container styles</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col-container</span> {</span>
+  <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+  <span class="hljs-attribute">text-align</span><span class="hljs-value">: justify <span class="hljs-important">!important</span>;</span>
+  <span class="hljs-value">text</span>-<span class="hljs-value">justify</span><span class="hljs-value">: distribute-all-lines;</span>
+  <span class="hljs-attribute">font-size</span><span class="hljs-value">: <span class="hljs-number">0</span> <span class="hljs-important">!important</span>;</span>
+  <span class="hljs-attribute">max-width</span><span class="hljs-value">: $grid-max-width;</span>
+  &amp; &gt; * {
+    <span class="hljs-attribute">text-align</span><span class="hljs-value">: left;</span>
+    <span class="hljs-attribute">font</span>-sze<span class="hljs-value">: rem-calc($rem-base);</span>
+  }
+  &amp;<span class="hljs-pseudo">:after</span> {
+    <span class="hljs-attribute">content</span><span class="hljs-value">: <span class="hljs-string">''</span>;</span>
+    <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+    <span class="hljs-attribute">width</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+  }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Sets grid column width</p>
 
@@ -517,42 +547,33 @@
         </li>
         
         
-        <li id="section-30">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
-              </div>
-              <p>Sets grid column width (with gutter)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col</span>($cols:<span class="hljs-preprocessor"> 4</span>, $gutter:<span class="hljs-preprocessor"> false</span>) {</span>
-  $<span class="hljs-attribute">column-width</span><span class="hljs-value">: $cols / $grid-columns;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $gutter !=<span class="hljs-preprocessor"> false</span> {</span>
-    $single-<span class="hljs-tag">col</span><span class="hljs-value">: (<span class="hljs-number">100</span>% - ($grid-gutter * ($grid-columns - <span class="hljs-number">1</span>))) / $grid-columns;</span>
-    <span class="hljs-attribute">width</span><span class="hljs-value">: ($single-col * $cols) + ($grid-gutter * ($cols - <span class="hljs-number">1</span>));</span>
-    <span class="hljs-attribute">margin-left</span><span class="hljs-value">: percentage($grid-gutter / <span class="hljs-number">100</span>);</span>
-    &amp;<span class="hljs-pseudo">:first-child</span> {
-      <span class="hljs-attribute">margin-left</span><span class="hljs-value">: <span class="hljs-number">0</span>;</span>
-    }
-    &amp;<span class="hljs-pseudo">:last-child</span> {
-      <span class="hljs-attribute">float</span><span class="hljs-value">: right;</span>
-    }
-  }<span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
-    <span class="hljs-attribute">width</span><span class="hljs-value">: percentage($column-width);</span>
-  }
-  <span class="hljs-attribute">float</span><span class="hljs-value">: left;</span>
-}</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Sets grid column width (with gutter)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> col</span>($span:<span class="hljs-preprocessor"> 4</span>) {</span>
+  $<span class="hljs-attribute">column-width</span><span class="hljs-value">: <span class="hljs-number">100</span>% / $grid-columns;</span>
+  $gutter<span class="hljs-value">: ($grid-gutter * <span class="hljs-number">0.75</span>) / $grid-max-width * <span class="hljs-number">100</span>;</span>
+  $<span class="hljs-tag">span</span>-<span class="hljs-attribute">width</span><span class="hljs-value">: $span * $column-width;</span>
+  <span class="hljs-attribute">width</span><span class="hljs-value">: $span-width - $gutter;</span>
+  <span class="hljs-attribute">vertical-align</span><span class="hljs-value">: top;</span>
+  <span class="hljs-attribute">display</span><span class="hljs-value">: inline-block;</span>
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Sets grid offet margin</p>
 
@@ -567,11 +588,11 @@
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Wraps interior content in a media query</p>
 
@@ -586,11 +607,11 @@
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Renders fully prefixed transistion</p>
 
@@ -603,11 +624,11 @@
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Renders fully prefixed transform</p>
 
@@ -620,11 +641,11 @@
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Renders fully prefixed box-sizing</p>
 
@@ -637,11 +658,11 @@
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Utility for prefixing mixins</p>
 
@@ -657,11 +678,11 @@
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Sets ellipsis overflow</p>
 
@@ -678,42 +699,17 @@
         </li>
         
         
-        <li id="section-38">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
-              </div>
-              <p>Clearfix include</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> clear</span>($<span class="hljs-keyword">extend</span>:<span class="hljs-preprocessor"> true</span>) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %clear;</span>
-  } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
-    &amp;<span class="hljs-pseudo">:after</span> {
-    <span class="hljs-attribute">content</span><span class="hljs-value">:<span class="hljs-string">""</span>;</span>
-    <span class="hljs-attribute">display</span><span class="hljs-value">:table;</span>
-    <span class="hljs-attribute">clear</span><span class="hljs-value">:both;</span>
-    }
-  }
-}</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
-              <p>Placeholder for clear</p>
+              <p>Clearfix include</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>%<span class="hljs-attribute">clear</span> {
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> clear</span>() {</span>
   &amp;<span class="hljs-pseudo">:after</span> {
   <span class="hljs-attribute">content</span><span class="hljs-value">:<span class="hljs-string">""</span>;</span>
   <span class="hljs-attribute">display</span><span class="hljs-value">:table;</span>
@@ -730,19 +726,16 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>Text hider</p>
+              <p>Placeholder for clear</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> hide-text</span>($<span class="hljs-keyword">extend</span>:<span class="hljs-preprocessor"> true</span>) {</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $<span class="hljs-keyword">extend</span> {</span>
-      <span class="hljs-at_rule">@<span class="hljs-keyword">extend</span> %hide-text;</span>
-    } <span class="hljs-at_rule">@<span class="hljs-keyword">else</span> {</span>
-      <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
-      <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
-      <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
-    }
+            <div class="content"><div class='highlight'><pre>%<span class="hljs-attribute">clear</span> {
+  &amp;<span class="hljs-pseudo">:after</span> {
+  <span class="hljs-attribute">content</span><span class="hljs-value">:<span class="hljs-string">""</span>;</span>
+  <span class="hljs-attribute">display</span><span class="hljs-value">:table;</span>
+  <span class="hljs-attribute">clear</span><span class="hljs-value">:both;</span>
+  }
 }</pre></div></div>
             
         </li>
@@ -753,6 +746,26 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Text hider</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> hide-text</span>() {</span>
+  <span class="hljs-attribute">overflow</span><span class="hljs-value">:hidden;</span>
+  <span class="hljs-attribute">text-indent</span><span class="hljs-value">: <span class="hljs-number">100</span>%;</span>
+  <span class="hljs-attribute">white-space</span><span class="hljs-value">: nowrap;</span>
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Placeholder for hide-text</p>
 
@@ -767,11 +780,11 @@
         </li>
         
         
-        <li id="section-42">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Inline List</p>
 
@@ -796,11 +809,11 @@
         </li>
         
         
-        <li id="section-43">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <h3 id="typography">Typography</h3>
 
@@ -809,11 +822,11 @@
         </li>
         
         
-        <li id="section-44">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Scale type at $type-rhythm-ratio</p>
 
@@ -829,11 +842,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-45">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Typographic Rhythm Mixin</p>
 
@@ -846,11 +859,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-46">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Set line-height</p>
 
@@ -868,11 +881,11 @@ $<span class="hljs-tag">h1</span>-size<span class="hljs-value">: round($h2-size 
         </li>
         
         
-        <li id="section-47">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Set heading sizes to size variables</p>
 
