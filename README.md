@@ -10,7 +10,9 @@ It is the most helpful, most used functions,mixins and helpers, for use in actua
 
 ### Installation
 
-You can either manually use the guff.scss file, use bower, or use compass:
+You can either manually use the guff.scss file, use bower, or use compass.
+
+####Using Bower
 
     bower install guff
     
@@ -18,7 +20,7 @@ In your Sass file:
 
     @import "guff"
 
-For Compass:
+####Using Compass:
 
     gem install guff-compass
     
