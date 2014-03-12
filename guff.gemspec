@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name          = "guff"
+  spec.name          = "guff-compass"
   spec.version       = "0.7.0"
   spec.authors       = ["Ken Wheeler"]
   spec.email         = ["ken@outlook.com"]
