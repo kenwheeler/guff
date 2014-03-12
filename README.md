@@ -10,12 +10,22 @@ It is the most helpful, most used functions,mixins and helpers, for use in actua
 
 ### Installation
 
-You can either manually use the guff.scss file or use bower:
+You can either manually use the guff.scss file, use bower, or use compass:
 
     bower install guff
     
-In your SASS file, import guff:
+In your Sass file:
 
     @import "guff"
 
+For Compass:
 
+    gem install guff-compass
+    
+In your config.rb
+
+    require "guff"
+    
+In your Sass file:
+
+    @import "guff"
