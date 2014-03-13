@@ -37,7 +37,7 @@
     max-width: $grid-max-width;
     & > * {
       text-align: left;
-      font-sze: rem-calc($rem-base);
+      font-size: rem-calc($rem-base);
     }
     &:after {
       content: '';

@@ -185,7 +185,7 @@ main {
       margin-bottom: 20px; }
       main section .col-container > * {
         text-align: left;
-        font-sze: 1rem; }
+        font-size: 1rem; }
       main section .col-container:after {
         content: '';
         display: inline-block;
