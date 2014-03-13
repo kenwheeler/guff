@@ -174,9 +174,30 @@ div {
                     <h2>rem-calc()</h2>
                 </header>
                 <code class="prettyprint">
+// rem-calc(int)
 // Calculates rem value for px value
 
 font-size: rem-calc(14);
+                </code>
+            </section>
+            <section>
+                <header>
+                    <h2>safe-rem()</h2>
+                </header>
+                <code class="prettyprint">
+// property : string
+// num : int
+
+@include safe-rem(property, num);
+
+// Calculates rem value for px value and renders both for compatibility fallback
+
+@include safe-rem(font-size, 14);
+
+// Outputs:
+
+font-size: 14px;
+font-size: 0.875rem;
                 </code>
             </section>
             <section>

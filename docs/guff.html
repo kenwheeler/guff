@@ -1012,25 +1012,25 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <p>Typographic Rhythm Mixin</p>
+              <p>Safe Rem</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> type</span>($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> safe-rem</span>($property:<span class="hljs-preprocessor"> font-size</span>, $num:<span class="hljs-preprocessor"> 14</span>){</span>
   $valid<span class="hljs-value">: true;</span>
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($rem-base) != <span class="hljs-string">"number"</span> {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$rem-base} is not a number"</span>;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($property) != <span class="hljs-string">"string"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"property: #{$property} is not a string"</span>;</span>
     $valid<span class="hljs-value">: false;</span>
   }
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($line-height-base) != <span class="hljs-string">"number"</span> {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$line-height-base} is not a number"</span>;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($num) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"num: #{$num} is not a number"</span>;</span>
     $valid<span class="hljs-value">: false;</span>
   }
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($type-rhythm-ratio) != <span class="hljs-string">"number"</span> {</span>
-    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"#{$type-rhythm-ratio} is not a number"</span>;</span>
-    $valid<span class="hljs-value">: false;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span>
+    #{$property}<span class="hljs-value">: #{_strip-unit($num)}px;</span>
+    #{$property}<span class="hljs-value">: rem-calc($num);</span>
   }
-  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span></pre></div></div>
+}</pre></div></div>
             
         </li>
         
@@ -1040,6 +1040,35 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Typographic Rhythm Mixin</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-at_rule">@<span class="hljs-keyword">mixin</span><span class="hljs-preprocessor"> type</span>($rem-base: $rem-base,$line-height-base: $line-height-base, $type-rhythm-ratio: $type-rhythm-ratio){</span>
+  $valid<span class="hljs-value">: true;</span>
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($rem-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"rem-base: #{$rem-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($line-height-base) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"line-height: #{$line-height-base} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span><span class="hljs-preprocessor"> type-of</span>($type-rhythm-ratio) != <span class="hljs-string">"number"</span> {</span>
+    <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"type-rhythm-ratio: #{$type-rhythm-ratio} is not a number"</span>;</span>
+    $valid<span class="hljs-value">: false;</span>
+  }
+  <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> $valid ==<span class="hljs-preprocessor"> true</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Scale type at $type-rhythm-ratio</p>
 
@@ -1057,11 +1086,11 @@
         </li>
         
         
-        <li id="section-47">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Set line-height</p>
 
@@ -1079,42 +1108,42 @@
         </li>
         
         
-        <li id="section-48">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Set heading sizes to size variables</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-tag">h1</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h1-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h1-size);</span>
     }
 
     <span class="hljs-tag">h2</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h2-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h2-size);</span>
     }
 
     <span class="hljs-tag">h3</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h3-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h3-size);</span>
     }
 
     <span class="hljs-tag">h4</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h4-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h4-size);</span>
     }
 
     <span class="hljs-tag">h5</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h5-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h5-size);</span>
     }
 
     <span class="hljs-tag">h6</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: rem-calc($h6-size);</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $h6-size);</span>
     }
 
     <span class="hljs-tag">p</span> {
-      <span class="hljs-attribute">font-size</span><span class="hljs-value">: $rem-base;</span>
+      <span class="hljs-at_rule">@<span class="hljs-keyword">include</span><span class="hljs-preprocessor"> safe-rem</span>(font-size, $rem-base);</span>
     }
   }
 }</pre></div></div>
