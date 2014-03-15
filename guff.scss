@@ -108,7 +108,7 @@ $grid-max-width: 1024px !default;
     @warn "base-value: #{$base-value} is not a number";
     @return null;
   }
-  $value: _strip-unit($value) / _strip-unit($base-value) * 1rem;
+  $value: _strip-unit($value) / 16 * 1rem;
   @if (_strip-unit($value) == 0) { $value: 0; } // Turn 0rem into 0
   @return $value;
 }

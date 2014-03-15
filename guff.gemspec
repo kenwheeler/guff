@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "guff-compass"
-  spec.version       = "1.0.0"
+  spec.version       = "1.0.1"
   spec.authors       = ["Ken Wheeler"]
   spec.email         = ["ken@outlook.com"]
   spec.summary       = %q{ All the Sass framework you need. }

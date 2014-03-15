@@ -424,7 +424,7 @@
     <span class="hljs-at_rule">@<span class="hljs-keyword">warn</span> <span class="hljs-string">"base-value: #{$base-value} is not a number"</span>;</span>
     <span class="hljs-at_rule">@return<span class="hljs-preprocessor"> null</span>;</span>
   }
-  $value<span class="hljs-value">: _strip-unit($value) / _strip-unit($base-value) * <span class="hljs-number">1</span>rem;</span>
+  $value<span class="hljs-value">: _strip-unit($value) / <span class="hljs-number">16</span> * <span class="hljs-number">1</span>rem;</span>
   <span class="hljs-at_rule">@<span class="hljs-keyword">if</span> (_<span class="hljs-function">strip-unit($value)</span> ==<span class="hljs-preprocessor"> 0</span>) {</span> $value<span class="hljs-value">: <span class="hljs-number">0</span>;</span> } <span class="hljs-comment">// Turn 0rem into 0</span>
   <span class="hljs-at_rule">@return $value;</span>
 }</pre></div></div>
